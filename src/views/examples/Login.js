@@ -17,12 +17,17 @@ import {
 } from "reactstrap";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
+import toastr from "toastr";
+import "toastr/build/toastr.min.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [isSubmit, setIsSubmit] = useState(false);
   const mainRef = useRef(null);
   const navigate = useNavigate();
 
@@ -32,7 +37,34 @@ const Login = () => {
     if (mainRef.current) {
       mainRef.current.scrollTop = 0;
     }
-  }, []);
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/home-page");
+    }
+  }, [navigate]);
+
+  const validateEmail = () => {
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setEmailError("Please enter a valid email address.");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const validatePassword = () => {
+    if (!password) {
+      setPasswordError("Password is required.");
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const validateForm = () => {
+    validateEmail();
+    validatePassword();
+    return !emailError && !passwordError;
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -40,20 +72,33 @@ const Login = () => {
     if (name === "password") setPassword(value);
   };
 
-  const handleSignIn = async () => {
-    try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
-        email,
-        password,
-      });
-      setMessage("Login successful!");
-      navigate("/argon-design-system-react");
-      console.log(response.data);
-    } catch (error) {
-      setMessage("Error logging in");
-      console.error("Error logging in", error);
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    if (!isSubmit) {
+      setIsSubmit(true);
+      if (validateForm()) {
+        try {
+          const response = await axios.post("http://localhost:3000/auth/login", {
+            email,
+            password,
+          });
+          setMessage("Login successful!");
+          const token = response.data.access_token;
+          localStorage.setItem("token", token);
+          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+          navigate("/home-page");
+        } catch (error) {
+          setMessage("Error logging in: wrong email or password.");
+          console.error("Error logging in", error);
+        }
+      }
+      setIsSubmit(false);
     }
   };
+  const token = localStorage.getItem("token");
+  if (token) {
+    return <Navigate to="/home-page" />;
+  }
 
   return (
     <>
@@ -119,12 +164,7 @@ const Login = () => {
                     <div className="text-center text-muted mb-4">
                       <small>Or sign in with credentials</small>
                     </div>
-                    {message && (
-                      <div className="text-center mb-3">
-                        <small>{message}</small>
-                      </div>
-                    )}
-                    <Form role="form">
+                    <Form role="form" onSubmit={handleSignIn}>
                       <FormGroup className="mb-3">
                         <InputGroup className="input-group-alternative">
                           <InputGroupAddon addonType="prepend">
@@ -138,8 +178,12 @@ const Login = () => {
                             name="email"
                             value={email}
                             onChange={handleInputChange}
+                            onBlur={validateEmail}
                           />
                         </InputGroup>
+                        {emailError && (
+                          <div className="text-danger">{emailError}</div>
+                        )}
                       </FormGroup>
                       <FormGroup>
                         <InputGroup className="input-group-alternative">
@@ -154,10 +198,19 @@ const Login = () => {
                             name="password"
                             value={password}
                             onChange={handleInputChange}
+                            onBlur={validatePassword}
                             autoComplete="off"
                           />
                         </InputGroup>
+                        {passwordError && (
+                          <div className="text-danger">{passwordError}</div>
+                        )}
                       </FormGroup>
+                      {message && (
+                        <div className="text-center mb-3 alert alert-danger">
+                          <small>{message}</small>
+                        </div>
+                      )}
                       <div className="custom-control custom-control-alternative custom-checkbox">
                         <input
                           className="custom-control-input"
@@ -175,8 +228,8 @@ const Login = () => {
                         <Button
                           className="my-4"
                           color="primary"
-                          type="button"
-                          onClick={handleSignIn}
+                          type="submit"
+                          disabled={isSubmit} // Disable the button while the form is being submitted
                         >
                           Sign in
                         </Button>

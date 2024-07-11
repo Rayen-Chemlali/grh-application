@@ -28,6 +28,10 @@ import Landing from "views/examples/Landing.js";
 import Login from "views/examples/Login.js";
 import Profile from "views/examples/Profile.js";
 import Register from "views/examples/Register.js";
+import { Alert } from "reactstrap";
+import AccessDeniedPage from "views/examples/accesDenied";
+
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -36,10 +40,12 @@ root.render(
     <Routes>
       <Route path="/" exact element={<Landing />} />
       <Route path="/index" exact element={<Index />} />
-      <Route path="/landing-page" exact element={<Landing />} />
+      <Route path="/home-page" exact element={<Landing />} />
       <Route path="/login-page" exact element={<Login />} />
       <Route path="/profile-page" exact element={<Profile />} />
       <Route path="/register-page" exact element={<Register />} />
+      <Route path="/error-page" exact element={<Alert />} />
+      <Route path="/accesDenied" element={<AccessDeniedPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   </BrowserRouter>

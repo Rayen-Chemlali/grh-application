@@ -30,6 +30,7 @@
   "homepage": "https://demos.creative-tim.com/argon-design-system-react/",
   "scripts": {
     "start": "react-scripts start",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -47,6 +48,7 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "@react-oauth/google": "^0.12.1",
     "ajv": "^8.0.0",
     "ajv-keywords": "^5.0.0",
     "axios": "^1.7.2",
@@ -55,13 +57,15 @@
     "headroom.js": "0.12.0",
     "moment": "2.29.4",
     "nouislider": "15.4.0",
+    "primereact": "^10.7.0",
     "react": ">=16.0.0",
     "react-datetime": "3.2.0",
     "react-dom": ">=16.0.0",
     "react-router-dom": "6.11.1",
     "react-scripts": "5.0.1",
     "reactstrap": "8.10.0",
-    "sass": "1.62.1"
+    "sass": "1.62.1",
+    "toastr": "^2.1.4"
   },
   "peerDependencies": {
     "react": ">=16.0.0",
