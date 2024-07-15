@@ -23,7 +23,9 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [roles, setRoles] = useState([]);
+  const [managers, setManagers] = useState([]);
   const [selectedRoleId, setSelectedRoleId] = useState("");
+  const [selectedManagerId, setSelectedManagerId] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -39,7 +41,16 @@ const Register = () => {
         console.error("Error fetching roles:", error);
       }
     };
+    const fetchManagers = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/users/manager");
+        setManagers(response.data);
+      } catch (error) {
+        console.error("Error fetching managers:", error);
+      }
+    };
     fetchRoles();
+    fetchManagers();
   }, []);
 
   const validateUsername = () => {
@@ -79,6 +90,7 @@ const Register = () => {
     if (name === "email") setEmail(value);
     if (name === "password") setPassword(value);
     if (name === "roleId") setSelectedRoleId(value);
+    if (name === "managerId") setSelectedManagerId(value);
   };
 
   const handleRegister = async (e) => {
@@ -92,12 +104,14 @@ const Register = () => {
             email,
             password,
             roleId: selectedRoleId,
+            managerId: selectedManagerId,
           });
           setMessage("User registered successfully!");
           setUsername("");
           setEmail("");
           setPassword("");
           setSelectedRoleId("");
+          setSelectedManagerId("");
         } catch (error) {
           setMessage("There was an error registering the user!");
           console.error("Error registering the user", error);
@@ -242,6 +256,28 @@ const Register = () => {
                             {roles.map((role) => (
                               <option key={role.id} value={role.id}>
                                 {role.name}
+                              </option>
+                            ))}
+                          </Input>
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-single-02" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            type="select"
+                            name="managerId"
+                            value={selectedManagerId}
+                            onChange={handleInputChange}
+                          >
+                            <option value="">Select Manager</option>
+                            {managers.map((manager) => (
+                              <option key={manager.id} value={manager.id}>
+                                {manager.username}
                               </option>
                             ))}
                           </Input>
