@@ -48,7 +48,12 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.5.2",
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@react-oauth/google": "^0.12.1",
+    "@types/react-dom": "^18.3.0",
     "ajv": "^8.0.0",
     "ajv-keywords": "^5.0.0",
     "axios": "^1.7.2",
@@ -73,7 +78,7 @@
   },
   "devDependencies": {
     "@types/markerclustererplus": "2.1.33",
-    "@types/react": "18.2.6",
+    "@types/react": "^18.2.6",
     "eslint-plugin-flowtype": "8.0.3",
     "jquery": "3.7.0",
     "typescript": "5.0.4"

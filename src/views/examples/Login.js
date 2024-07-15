@@ -18,7 +18,6 @@ import {
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
 import { useNavigate, Navigate } from "react-router-dom";
-import toastr from "toastr";
 import "toastr/build/toastr.min.css";
 
 const Login = () => {
@@ -26,6 +25,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [auth, setAuth] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
   const mainRef = useRef(null);
@@ -83,8 +83,12 @@ const Login = () => {
             password,
           });
           setMessage("Login successful!");
-          const token = response.data.access_token;
+          const token = response.data;
           localStorage.setItem("token", token);
+          setAuth(true);
+          console.log("hathy heya",setAuth)
+          console.log(auth)
+          localStorage.setItem("Auth", setAuth);
           axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
           navigate("/home-page");
         } catch (error) {

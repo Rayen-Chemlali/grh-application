@@ -1,10 +1,9 @@
 
 import React from "react";
-// nodejs library that concatenates classes
-import classnames from "classnames";
-import  Logout  from './Menu.js';
 
-// reactstrap components
+import classnames from "classnames";
+
+
 import {
   Badge,
   Button,
@@ -55,9 +54,7 @@ class Landing extends React.Component {
                 <span />
                 <span />
                 <span >
-               
                 </span>
-                <Logout/>  
               </div>
               <Container className="py-lg-md d-flex">
                 <div className="col px-0">
