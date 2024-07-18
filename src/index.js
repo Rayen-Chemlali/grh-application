@@ -32,7 +32,7 @@ root.render(
       <Route path="/index" exact element={<Index />} />
       <Route path="/home-page" exact element={<Landing />} />
       <Route path="/login-page" exact element={<Login />} />
-      <Route path="/accessdenied" exact element={<AccessDeniedPage />} />
+      <Route path="/accesDenied" exact element={<AccessDeniedPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   </BrowserRouter>

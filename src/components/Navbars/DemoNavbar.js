@@ -242,19 +242,16 @@ const DemoNavbar = () => {
                   </NavItem>
                   
                   <NavItem className="d-none d-lg-block ml-lg-4">
-                    {/* <Button
+                    {!hide && ( <Button
                       className="btn-neutral btn-icon"
                       color="default"
-                      href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-navbar"
-                      target="_blank"
+                      href="http://localhost:3001/login-page"
                     >
-                      <span className="btn-inner--icon">
-                        <i className="fa fa-cloud-download mr-2" />
-                      </span>
+   
                       <span className="nav-link-inner--text ml-1">
-                        Download
+                        Login
                       </span>
-                    </Button> */}
+                    </Button> )}
                   </NavItem>
                 </Nav>
                 
@@ -263,6 +260,7 @@ const DemoNavbar = () => {
             </Container>
 
             {hide && (<PopupDemo/>)}
+
           </Navbar>
           
         </header>

@@ -30,6 +30,7 @@ const Register = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
 
   useEffect(() => {
@@ -112,10 +113,13 @@ const Register = () => {
           setPassword("");
           setSelectedRoleId("");
           setSelectedManagerId("");
+          setErrorMessage("");
         } catch (error) {
-          setMessage("There was an error registering the user!");
+          setErrorMessage("There was an error registering the user!");
           console.error("Error registering the user", error);
         }
+      } else {
+        setErrorMessage("Please correct the errors in the form.");
       }
       setIsSubmit(false);
     }
@@ -284,8 +288,13 @@ const Register = () => {
                         </InputGroup>
                       </FormGroup>
                       {message && (
-                        <div className="text-center mb-3 alert alert-danger">
+                        <div className="text-center mb-3 alert alert-success">
                           <small>{message}</small>
+                        </div>
+                      )}
+                      {errorMessage && (
+                        <div className="text-center mb-3 alert alert-danger">
+                          <small>{errorMessage}</small>
                         </div>
                       )}
                       <Row className="my-4">
