@@ -1,25 +1,9 @@
-/*!
 
-=========================================================
-* Argon Design System React - v1.1.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-design-system-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-design-system-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
-// nodejs library that concatenates classes
+
 import classnames from "classnames";
 
-// reactstrap components
+
 import {
   Badge,
   Button,
@@ -59,6 +43,8 @@ class Landing extends React.Component {
             {/* shape Hero */}
             <section className="section section-lg section-shaped pb-250">
               <div className="shape shape-style-1 shape-default">
+              
+
                 <span />
                 <span />
                 <span />
@@ -67,7 +53,8 @@ class Landing extends React.Component {
                 <span />
                 <span />
                 <span />
-                <span />
+                <span >
+                </span>
               </div>
               <Container className="py-lg-md d-flex">
                 <div className="col px-0">
@@ -105,6 +92,7 @@ class Landing extends React.Component {
                             Download React
                           </span>
                         </Button>
+                       
                       </div>
                     </Col>
                   </Row>
