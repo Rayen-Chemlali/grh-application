@@ -22,6 +22,9 @@ export class UserEntity {
   @Column()
   email: string;
 
+  @Column({ nullable: true })
+  image: string;
+
   @ManyToOne(() => UserEntity, (user) => user.managedEmployees)
   @JoinColumn({ name: "manager_id" })
   manager: UserEntity;

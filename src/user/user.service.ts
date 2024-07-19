@@ -19,6 +19,11 @@ export class UserService {
   async getUsers(): Promise<UserEntity[]> {
     return this.userRepository.find({ relations: ["role", "manager"] });
   }
+  async getUserById(id: number): Promise<UserEntity | undefined> {
+    return this.userRepository.findOne({
+      where: { id },
+    });
+  }
 
   async getManagerUsers(): Promise<UserEntity[]> {
     return this.userRepository
@@ -28,7 +33,8 @@ export class UserService {
       .getMany();
   }
   async signUp(createUserDto: CreateUserDto): Promise<UserEntity> {
-    const { username, password, email, roleId } = createUserDto;
+    const { username, password, email, roleId, managerId, image } =
+      createUserDto;
 
     // const usernameRegex = /^[a-zA-Z0-9]+$/;
     // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -38,7 +44,6 @@ export class UserService {
     // if (!emailRegex.test(email)) {
     //     throw new Error('Invalid email');
     // }
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const role = await this.roleRepository.findOne({ where: { id: roleId } });
@@ -46,12 +51,23 @@ export class UserService {
       throw new Error(`Role with ID ${roleId} not found`);
     }
 
+    let manager: UserEntity | null = null;
+    if (managerId) {
+      manager = await this.userRepository.findOne({ where: { id: managerId } });
+      if (!manager) {
+        throw new Error(`Manager with ID ${managerId} not found`);
+      }
+    }
+
     const user = this.userRepository.create({
       username,
       password: hashedPassword,
       email,
       role,
+      manager,
+      image,
     });
+
     return this.userRepository.save(user);
   }
 
