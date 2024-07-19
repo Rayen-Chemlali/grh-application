@@ -6,7 +6,7 @@ import {
   JoinColumn,
   OneToMany,
 } from "typeorm";
-import { RoleEntity } from "src/role/entity/role.entity";
+import { RoleEntity } from "../../role/entity/role.entity";
 
 @Entity()
 export class UserEntity {
