@@ -27,7 +27,4 @@ export class CreateUserDto {
   @IsNumber()
   managerId?: number;
 
-  @IsOptional()
-  @IsString()
-  image?: string;
 }
