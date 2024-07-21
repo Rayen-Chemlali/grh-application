@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -18,6 +19,13 @@ export class ProfileController {
   @Get()
   findAll() {
     return this.profileService.findAll();
+  }
+
+  @Get(":id")
+  async getProfileById(
+    @Param("id") id: number,
+  ): Promise<ProfileEntity | undefined> {
+    return this.profileService.getProfileById(id);
   }
 
   @Post()

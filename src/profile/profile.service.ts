@@ -14,6 +14,12 @@ export class ProfileService {
     return this.profileRepository.find();
   }
 
+  async getProfileById(id: number): Promise<ProfileEntity | undefined> {
+    return this.profileRepository.findOne({
+      where: { id },
+    });
+  }
+
   async create(profile: Partial<ProfileEntity>): Promise<ProfileEntity> {
     const newProfile = this.profileRepository.create(profile);
     return this.profileRepository.save(newProfile);
