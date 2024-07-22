@@ -3,15 +3,15 @@ import { UserEntity } from '../../user/entity/user.entity';
 
 @Entity()
 export class RoleEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    description: string;
+  @Column()
+  description: string;
 
-    @OneToMany(() => UserEntity, user => user.role)
-    users: UserEntity[];
+  @OneToMany(() => UserEntity, (user) => user.role)
+  users: UserEntity[];
 }

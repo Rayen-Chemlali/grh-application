@@ -3,8 +3,8 @@ import { AuthPayloadDto } from "./dto/auth.dto";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
 import { InjectRepository } from "@nestjs/typeorm";
-import { UserEntity } from "src/user/entity/user.entity";
 import { Repository } from "typeorm";
+import { UserEntity } from "../user/entity/user.entity";
 
 @Injectable()
 export class AuthService {
@@ -17,14 +17,15 @@ export class AuthService {
   async validateUser({ email, password }: AuthPayloadDto) {
     const user = await this.userRepository.findOne({ where: { email } });
     if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException("Invalid credentials");
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException("Invalid credentials");
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: userPassword, ...userWithoutPassword } = user;
     return this.jwtService.sign(userWithoutPassword);
   }
