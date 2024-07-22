@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { UserEntity } from "../../user/entity/user.entity";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { UserEntity } from '../../user/entity/user.entity';
 
 @Entity()
 export class RoleEntity {

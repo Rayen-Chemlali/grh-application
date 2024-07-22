@@ -6,6 +6,9 @@ import { AuthModule } from "./auth/auth.module";
 import { typeOrmConfig } from "./config/typeorm.config";
 import { UserModule } from "./user/user.module";
 import { RoleModule } from "./role/role.module";
+import { ProfileModule } from "./profile/profile.module";
+import { join } from "path";
+import { ServeStaticModule } from "@nestjs/serve-static";
 
 @Module({
   imports: [
@@ -13,6 +16,11 @@ import { RoleModule } from "./role/role.module";
     AuthModule,
     UserModule,
     RoleModule,
+    ProfileModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, "..", "uploads"),
+      serveRoot: "/uploads",
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

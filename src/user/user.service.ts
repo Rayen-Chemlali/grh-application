@@ -25,16 +25,14 @@ export class UserService {
     });
   }
 
-  async getManagerUsers(): Promise<UserEntity[]> {
-    return this.userRepository
-      .createQueryBuilder("user")
-      .innerJoinAndSelect("user.role", "role")
-      .where("role.name = :roleName", { roleName: "manager" })
-      .getMany();
+  async getUsersByRole(roleId: number): Promise<UserEntity[]> {
+    return this.userRepository.find({
+      where: { role: { id: roleId } },
+      relations: ["role"],
+    });
   }
   async signUp(createUserDto: CreateUserDto): Promise<UserEntity> {
-    const { username, password, email, roleId, managerId, image } =
-      createUserDto;
+    const { username, password, email, roleId, managerId } = createUserDto;
 
     // const usernameRegex = /^[a-zA-Z0-9]+$/;
     // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -65,7 +63,6 @@ export class UserService {
       email,
       role,
       manager,
-      image,
     });
 
     return this.userRepository.save(user);

@@ -5,8 +5,10 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  OneToOne,
 } from "typeorm";
 import { RoleEntity } from "../../role/entity/role.entity";
+import { ProfileEntity } from "../../profile/entity/profile.entity";
 
 @Entity()
 export class UserEntity {
@@ -22,9 +24,6 @@ export class UserEntity {
   @Column()
   email: string;
 
-  @Column({ nullable: true })
-  image: string;
-
   @ManyToOne(() => UserEntity, (user) => user.managedEmployees)
   @JoinColumn({ name: "manager_id" })
   manager: UserEntity;
@@ -35,4 +34,7 @@ export class UserEntity {
   @ManyToOne(() => RoleEntity, (role) => role.users)
   @JoinColumn({ name: "role_id" })
   role: RoleEntity;
+
+  @OneToOne(() => ProfileEntity, (profile) => profile.user)
+  profile: ProfileEntity;
 }
