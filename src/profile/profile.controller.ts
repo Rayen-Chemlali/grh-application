@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
+  Put,
   UploadedFile,
   UseInterceptors,
 } from "@nestjs/common";
@@ -38,5 +40,18 @@ export class ProfileController {
       profile.image = file.filename; // Store the filename in the profile
     }
     return this.profileService.create(profile);
+  }
+
+  @Put(":id")
+  async update(
+    @Param("id") id: number,
+    @Body() profile: Partial<ProfileEntity>,
+  ): Promise<ProfileEntity | undefined> {
+    return this.profileService.update(id, profile);
+  }
+
+  @Delete(":id")
+  async delete(@Param("id") id: number): Promise<void> {
+    return this.profileService.delete(id);
   }
 }

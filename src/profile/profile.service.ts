@@ -24,4 +24,16 @@ export class ProfileService {
     const newProfile = this.profileRepository.create(profile);
     return this.profileRepository.save(newProfile);
   }
+
+  async update(
+    id: number,
+    profile: Partial<ProfileEntity>,
+  ): Promise<ProfileEntity | undefined> {
+    await this.profileRepository.update(id, profile);
+    return this.getProfileById(id);
+  }
+
+  async delete(id: number): Promise<void> {
+    await this.profileRepository.delete(id);
+  }
 }
