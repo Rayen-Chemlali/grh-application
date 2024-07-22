@@ -7,8 +7,8 @@ import {
   OneToMany,
   OneToOne,
 } from "typeorm";
-import { RoleEntity } from "src/role/entity/role.entity";
-import { ProfileEntity } from "src/profile/entity/profile.entity";
+import { RoleEntity } from "../../role/entity/role.entity";
+import { ProfileEntity } from "../../profile/entity/profile.entity";
 
 @Entity()
 export class UserEntity {
