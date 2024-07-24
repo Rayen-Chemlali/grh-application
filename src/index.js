@@ -14,6 +14,7 @@ import Register from "views/examples/Register.js";
 import AccessDeniedPage from "views/examples/accesDenied";
 import PrivateRoutes from "utils/privateRoutes"
 import UserTable from "views/Backoffice/UserTable";
+import AddProfile from "views/Backoffice/AddProfile";
 
 
 
@@ -27,6 +28,7 @@ root.render(
         <Route path="/profile-page" exact element={<Profile />} />
         <Route path="/register-page" exact element={<Register />} />
         <Route path="/users" exact element={<UserTable />} />
+        <Route path="/profile" exact element={<AddProfile />} />
       </Route>
       <Route path="/" exact element={<Landing />} />
       <Route path="/index" exact element={<Index />} />

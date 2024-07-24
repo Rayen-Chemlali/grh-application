@@ -19,7 +19,7 @@ const UserTable = () => {
           console.error('There was an error fetching the users!', error);
         });
 
-    axios.get('http://localhost:3000/users/manager')
+    axios.get('http://localhost:3000/users/role/1')
         .then(response => {
           setManagers(response.data);
         })
@@ -57,6 +57,8 @@ const UserTable = () => {
             delete newState[id];
             return newState;
           });
+          window.location.reload();
+
         })
         .catch(error => {
           console.error('There was an error updating the user!', error);

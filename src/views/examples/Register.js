@@ -44,7 +44,7 @@ const Register = () => {
     };
     const fetchManagers = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/users/manager");
+        const response = await axios.get("http://localhost:3000/users/role/1");
         setManagers(response.data);
       } catch (error) {
         console.error("Error fetching managers:", error);
