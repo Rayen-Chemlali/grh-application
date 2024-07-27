@@ -13,7 +13,7 @@ import Profile from "views/examples/Profile.js";
 import Register from "views/examples/Register.js";
 import AccessDeniedPage from "views/examples/accesDenied";
 import PrivateRoutes from "utils/privateRoutes";
-import UserTable from "views/Backoffice/UserTable";
+import UserTablePage from "./views/Backoffice/UserTablePage";
 import AddProfile from "views/Backoffice/AddProfile";
 import DocumentManagementPage from "./views/Backoffice/DocumentManagemntPage";
 
@@ -26,7 +26,7 @@ root.render(
         <Route element={<PrivateRoutes />}>
           <Route path="/profile-page" element={<Profile />} />
           <Route path="/register-page" element={<Register />} />
-          <Route path="/users" element={<UserTable />} />
+          <Route path="/users" element={<UserTablePage />} />
           <Route path="/profile" element={<AddProfile />} />
           <Route path="/documents/:userId" element={<DocumentManagementPage />} />
         </Route>

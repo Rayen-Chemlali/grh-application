@@ -73,7 +73,7 @@
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.11.1",
     "react-scripts": "^5.0.1",
-    "reactstrap": "8.10.0",
+    "reactstrap": "^8.10.0",
     "sass": "1.62.1",
     "toastr": "^2.1.4"
   },
