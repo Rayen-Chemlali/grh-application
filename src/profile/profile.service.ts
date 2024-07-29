@@ -1,9 +1,9 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { ProfileEntity } from "./entity/profile.entity";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UserEntity } from "src/user/entity/user.entity";
-import { CreateProfileDto } from "./dto/create-profile.dto";
+import { ProfileDTO } from "./dto/create-profile.dto";
 
 @Injectable()
 export class ProfileService {
@@ -21,22 +21,45 @@ export class ProfileService {
   async getProfileById(id: number): Promise<ProfileEntity | undefined> {
     return this.profileRepository.findOne({
       where: { id },
+      relations: ["user"],
     });
   }
 
-  async create(createProfileDto: CreateProfileDto): Promise<ProfileEntity> {
-    const { userId, ...profileData } = createProfileDto;
+  async createOrUpdateProfile(
+    userId: number,
+    profileDto: ProfileDTO,
+  ): Promise<ProfileEntity> {
     const user = await this.userRepository.findOne({
       where: { id: userId },
+      relations: ["profile"],
     });
 
     if (!user) {
-      throw new NotFoundException("User not found");
+      throw new Error("User not found");
     }
 
-    const newProfile = this.profileRepository.create(profileData);
+    if (user.profile) {
+      const existingProfile = await this.profileRepository.findOne({
+        where: { id: user.profile.id },
+      });
+      if (existingProfile) {
+        const updatedProfile = this.profileRepository.merge(
+          existingProfile,
+          profileDto,
+        );
+        return await this.profileRepository.save(updatedProfile);
+      }
+    }
+
+    const newProfile = this.profileRepository.create(profileDto);
     newProfile.user = user;
-    return this.profileRepository.save(newProfile);
+
+    const savedProfile = await this.profileRepository.save(newProfile);
+
+    user.profile = savedProfile;
+    await this.userRepository.save(user);
+
+    return savedProfile;
   }
 
   async update(

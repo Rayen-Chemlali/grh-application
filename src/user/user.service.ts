@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { UserEntity } from "./entity/user.entity";
@@ -6,6 +6,7 @@ import { RoleEntity } from "../role/entity/role.entity";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import * as bcrypt from "bcrypt";
+import { ProfileEntity } from "src/profile/entity/profile.entity";
 
 @Injectable()
 export class UserService {
@@ -14,15 +15,26 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
     @InjectRepository(RoleEntity)
     private roleRepository: Repository<RoleEntity>,
+    @InjectRepository(ProfileEntity)
+    private profileRepository: Repository<ProfileEntity>,
   ) {}
 
   async getUsers(): Promise<UserEntity[]> {
     return this.userRepository.find({ relations: ["role", "manager"] });
   }
   async getUserById(id: number): Promise<UserEntity | undefined> {
-    return this.userRepository.findOne({
+    const user = await this.userRepository.findOne({
       where: { id },
+      relations: ["profile", "role"],
     });
+
+    if (!user) {
+      throw new NotFoundException("User not found");
+    }
+
+    const profile = user.profile;
+
+    return user;
   }
 
   async getUsersByRole(roleId: number): Promise<UserEntity[]> {
