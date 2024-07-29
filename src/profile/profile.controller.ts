@@ -13,7 +13,7 @@ import { ProfileEntity } from "./entity/profile.entity";
 import { ProfileService } from "./profile.service";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { multerOptions } from "./multer";
-import { CreateProfileDto } from "./dto/create-profile.dto";
+import { ProfileDTO } from "./dto/create-profile.dto";
 
 @Controller("profile")
 export class ProfileController {
@@ -31,16 +31,17 @@ export class ProfileController {
     return this.profileService.getProfileById(id);
   }
 
-  @Post()
-  @UseInterceptors(FileInterceptor('image', multerOptions))
+  @Post(":userId")
+  @UseInterceptors(FileInterceptor("image", multerOptions))
   async createProfile(
-    @Body() createProfileDto: CreateProfileDto,
+    @Param("userId") userId: number,
+    @Body() createProfileDto: ProfileDTO,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<ProfileEntity> {
     if (file) {
       createProfileDto.image = file.filename;
     }
-    return this.profileService.create(createProfileDto);
+    return this.profileService.createOrUpdateProfile(userId, createProfileDto);
   }
 
   @Put(":id")
