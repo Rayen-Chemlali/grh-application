@@ -19,6 +19,7 @@ import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
 import { useNavigate, Navigate } from "react-router-dom";
 import "toastr/build/toastr.min.css";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -84,11 +85,12 @@ const Login = () => {
           });
           setMessage("Login successful!");
           const token = response.data;
+          const decodedToken = jwtDecode(token);
+          const id = decodedToken.id;
           localStorage.setItem("token", token);
-          setAuth(true);
-          console.log("hathy heya",setAuth)
-          console.log(auth)
-          localStorage.setItem("Auth", setAuth);
+          const response1 = await axios.get(`http://localhost:3000/users/${id}`);
+          const user = JSON.stringify(response1.data);
+          localStorage.setItem("user", user);
           axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
           navigate("/home-page");
         } catch (error) {
