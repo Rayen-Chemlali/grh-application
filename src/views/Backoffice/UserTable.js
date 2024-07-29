@@ -3,12 +3,15 @@ import axios from 'axios';
 import { Card, CardBody, Container, Row, Col, Table, Button, Input } from 'reactstrap';
 import SimpleFooter from 'components/Footers/SimpleFooter';
 import DemoNavbar from 'components/Navbars/DemoNavbar';
+import { useNavigate } from 'react-router-dom';
 
 const UserTable = () => {
   const [users, setUsers] = useState([]);
   const [managers, setManagers] = useState([]);
   const [roles, setRoles] = useState([]);
   const [editingUser, setEditingUser] = useState({});
+  const [role, setRole] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:3000/users')
@@ -34,6 +37,8 @@ const UserTable = () => {
         .catch(error => {
           console.error('There was an error fetching the roles!', error);
         });
+        const user =  JSON.parse(localStorage.getItem("user"));
+        setRole(user.role.name);
   }, []);
 
   const handleInputChange = (e, id) => {
@@ -64,6 +69,10 @@ const UserTable = () => {
           console.error('There was an error updating the user!', error);
         });
   };
+
+  if (role !== "admin") {
+    return navigate('/accesDenied');
+  }
 
   return (
       <main>

@@ -17,6 +17,7 @@ import {
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -32,12 +33,17 @@ const Register = () => {
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
+  const [role, setRole] = useState("");
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchRoles = async () => {
       try {
         const response = await axios.get("http://localhost:3000/roles");
         setRoles(response.data);
+        const user =  JSON.parse(localStorage.getItem("user"));
+        setRole(user.role.name);
       } catch (error) {
         console.error("Error fetching roles:", error);
       }
@@ -124,6 +130,10 @@ const Register = () => {
       setIsSubmit(false);
     }
   };
+
+  if (role !== "admin") {
+    return navigate('/accesDenied');
+  }
 
   return (
     <>
