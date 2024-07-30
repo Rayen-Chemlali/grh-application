@@ -22,6 +22,7 @@ const Profile = () => {
       try {
         const response = await axios.get(`http://localhost:3000/profile/${userId}`);
         setProfile(response.data);
+        console.log(response.data.image)
       } catch (error) {
         console.error("There was an error fetching the profile!", error);
       }
@@ -72,7 +73,7 @@ const Profile = () => {
                         <img
                           alt="..."
                           className="rounded-circle"
-                          src={profile.image ? profile.image : require("assets/img/theme/team-1-800x800.jpg")}
+                          src={profile.image ? `http://localhost:3000/uploads/${profile.image}` : require("assets/img/theme/team-1-800x800.jpg")}
                         />
                       </a>
                     </div>

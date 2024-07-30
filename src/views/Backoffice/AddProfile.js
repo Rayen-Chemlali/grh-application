@@ -60,8 +60,9 @@ const AddProfile = () => {
       setSelectedEmployeeId(value);
       if (value) {
         try {
-          const user =  JSON.parse(localStorage.getItem("user"));
-          const response = await axios.get(`http://localhost:3000/profile/${user.profile.id}`);
+          const user = await axios.get(`http://localhost:3000/users/${value}`);
+          console.log(user.data.profile.id)
+          const response = await axios.get(`http://localhost:3000/profile/${user.data.profile.id}`);
           const profile = response.data;
 
           setNom(profile.nom || "");

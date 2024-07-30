@@ -256,10 +256,10 @@ const DemoNavbar = () => {
                 </Nav>
                 
               </UncontrolledCollapse>
-              
+              {hide && (<PopupDemo/>)}
             </Container>
 
-            {hide && (<PopupDemo/>)}
+            
 
           </Navbar>
           
