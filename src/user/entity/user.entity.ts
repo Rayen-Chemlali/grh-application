@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { RoleEntity } from "../../role/entity/role.entity";
 import { ProfileEntity } from "../../profile/entity/profile.entity";
+import {DocumentEntity} from "../../document/entity/document.entity";
 
 @Entity()
 export class UserEntity {
@@ -37,4 +38,7 @@ export class UserEntity {
 
   @OneToOne(() => ProfileEntity, (profile) => profile.user)
   profile: ProfileEntity;
+
+  @OneToMany(() => DocumentEntity, (document) => document.user)
+  documents: DocumentEntity[];
 }

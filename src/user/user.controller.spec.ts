@@ -45,14 +45,6 @@ describe('UserController', () => {
     });
   });
 
-  describe('getManagerUsers', () => {
-    it('should return an array of manager users', async () => {
-      const result: UserEntity[] = [];
-      jest.spyOn(service, 'getManagerUsers').mockResolvedValue(result);
-
-      expect(await controller.getManagerUsers()).toBe(result);
-    });
-  });
 
   describe('signUp', () => {
     it('should create and return a user', async () => {
@@ -90,4 +82,5 @@ describe('UserController', () => {
       expect(await controller.deleteUser(1)).toBe(undefined);
     });
   });
-});
+
+ });

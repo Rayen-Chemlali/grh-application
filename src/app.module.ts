@@ -9,6 +9,7 @@ import { RoleModule } from "./role/role.module";
 import { ProfileModule } from "./profile/profile.module";
 import { join } from "path";
 import { ServeStaticModule } from "@nestjs/serve-static";
+import { DocumentModule } from './document/document.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ServeStaticModule } from "@nestjs/serve-static";
       rootPath: join(__dirname, "..", "uploads"),
       serveRoot: "/uploads",
     }),
+    DocumentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

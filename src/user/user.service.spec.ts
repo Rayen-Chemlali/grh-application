@@ -46,18 +46,6 @@ describe('UserService', () => {
     });
   });
 
-  describe('getManagerUsers', () => {
-    it('should return an array of manager users', async () => {
-      const result: UserEntity[] = [];
-      jest.spyOn(userRepository, 'createQueryBuilder').mockReturnValueOnce({
-        innerJoinAndSelect: jest.fn().mockReturnThis(),
-        where: jest.fn().mockReturnThis(),
-        getMany: jest.fn().mockResolvedValue(result),
-      } as any);
-
-      expect(await service.getManagerUsers()).toBe(result);
-    });
-  });
 
   describe('updateUserRole', () => {
     it('should update the role of a user and return the updated user', async () => {
@@ -105,6 +93,24 @@ describe('UserService', () => {
       jest.spyOn(userRepository, 'remove').mockResolvedValue(user);
 
       expect(await service.deleteUser(1)).toBeUndefined();
+    });
+  });
+
+  describe('getUsersByRole', () => {
+    it('should return an array of users for a given roleId', async () => {
+      const roleId = 1;
+      const users: UserEntity[] = [
+        { id: 1, username: 'user1', role: { id: roleId } } as UserEntity,
+        { id: 2, username: 'user2', role: { id: roleId } } as UserEntity,
+      ];
+      jest.spyOn(userRepository, 'find').mockResolvedValue(users);
+
+      const result = await service.getUsersByRole(roleId);
+      expect(result).toEqual(users);
+      expect(userRepository.find).toHaveBeenCalledWith({
+        where: { role: { id: roleId } },
+        relations: ['role'],
+      });
     });
   });
 });
