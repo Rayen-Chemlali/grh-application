@@ -1,8 +1,6 @@
-
 import React from "react";
 
 import classnames from "classnames";
-
 
 import {
   Badge,
@@ -43,8 +41,6 @@ class Landing extends React.Component {
             {/* shape Hero */}
             <section className="section section-lg section-shaped pb-250">
               <div className="shape shape-style-1 shape-default">
-              
-
                 <span />
                 <span />
                 <span />
@@ -53,46 +49,44 @@ class Landing extends React.Component {
                 <span />
                 <span />
                 <span />
-                <span >
-                </span>
+                <span />
               </div>
               <Container className="py-lg-md d-flex">
                 <div className="col px-0">
                   <Row>
                     <Col lg="6">
                       <h1 className="display-3 text-white">
-                        A beautiful Design System{" "}
-                        <span>completed with examples</span>
+                        Streamlined HR Management{" "}
+                        <span>optimized for your team</span>
                       </h1>
                       <p className="lead text-white">
-                        The design system comes with four pre-built pages to
-                        help you get started faster. You can change the text and
-                        images and you're good to go.
+                        Our HR management system comes with pre-built templates
+                        to help you get started quickly. Customize employee profiles,
+                        manage accounts, and streamline HR operations efficiently.
                       </p>
                       <div className="btn-wrapper">
                         <Button
                           className="btn-icon mb-3 mb-sm-0"
                           color="info"
-                          href="https://demos.creative-tim.com/argon-design-system-react/#/documentation/alerts?ref=adsr-landing-page"
+                          href="#components"
                         >
                           <span className="btn-inner--icon mr-1">
-                            <i className="fa fa-code" />
+                            <i className="fa fa-cogs" />
                           </span>
-                          <span className="btn-inner--text">Components</span>
+                          <span className="btn-inner--text">Explore Features</span>
                         </Button>
                         <Button
                           className="btn-white btn-icon mb-3 mb-sm-0 ml-1"
                           color="default"
-                          href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-landing-page"
+                          href="#download"
                         >
                           <span className="btn-inner--icon mr-1">
                             <i className="ni ni-cloud-download-95" />
                           </span>
                           <span className="btn-inner--text">
-                            Download React
+                            Get Started
                           </span>
                         </Button>
-                       
                       </div>
                     </Col>
                   </Row>
@@ -126,31 +120,29 @@ class Landing extends React.Component {
                       <Card className="card-lift--hover shadow border-0">
                         <CardBody className="py-5">
                           <div className="icon icon-shape icon-shape-primary rounded-circle mb-4">
-                            <i className="ni ni-check-bold" />
+                            <i className="ni ni-single-02" />
                           </div>
                           <h6 className="text-primary text-uppercase">
-                            Download Argon
+                            Employee Management
                           </h6>
                           <p className="description mt-3">
-                            Argon is a great free UI package based on Bootstrap
-                            4 that includes the most important components and
-                            features.
+                            Manage employee profiles, track performance, and streamline communication with our comprehensive HR tools.
                           </p>
                           <div>
                             <Badge color="primary" pill className="mr-1">
-                              design
+                              employee
                             </Badge>
                             <Badge color="primary" pill className="mr-1">
-                              system
+                              profiles
                             </Badge>
                             <Badge color="primary" pill className="mr-1">
-                              creative
+                              management
                             </Badge>
                           </div>
                           <Button
                             className="mt-4"
                             color="primary"
-                            href="#pablo"
+                            href="#learn-more"
                             onClick={(e) => e.preventDefault()}
                           >
                             Learn more
@@ -162,31 +154,29 @@ class Landing extends React.Component {
                       <Card className="card-lift--hover shadow border-0">
                         <CardBody className="py-5">
                           <div className="icon icon-shape icon-shape-success rounded-circle mb-4">
-                            <i className="ni ni-istanbul" />
+                            <i className="ni ni-settings-gear-65" />
                           </div>
                           <h6 className="text-success text-uppercase">
-                            Build Something
+                            Account Management
                           </h6>
                           <p className="description mt-3">
-                            Argon is a great free UI package based on Bootstrap
-                            4 that includes the most important components and
-                            features.
+                            Simplify account settings and manage user permissions to ensure smooth and secure HR operations.
                           </p>
                           <div>
                             <Badge color="success" pill className="mr-1">
-                              business
+                              account
                             </Badge>
                             <Badge color="success" pill className="mr-1">
-                              vision
+                              settings
                             </Badge>
                             <Badge color="success" pill className="mr-1">
-                              success
+                              security
                             </Badge>
                           </div>
                           <Button
                             className="mt-4"
                             color="success"
-                            href="#pablo"
+                            href="#learn-more"
                             onClick={(e) => e.preventDefault()}
                           >
                             Learn more
@@ -198,31 +188,29 @@ class Landing extends React.Component {
                       <Card className="card-lift--hover shadow border-0">
                         <CardBody className="py-5">
                           <div className="icon icon-shape icon-shape-warning rounded-circle mb-4">
-                            <i className="ni ni-planet" />
+                            <i className="ni ni-bullet-list-67" />
                           </div>
                           <h6 className="text-warning text-uppercase">
-                            Prepare Launch
+                            Contact Directory
                           </h6>
                           <p className="description mt-3">
-                            Argon is a great free UI package based on Bootstrap
-                            4 that includes the most important components and
-                            features.
+                            Maintain an organized directory of employee contacts and ensure seamless internal communication.
                           </p>
                           <div>
                             <Badge color="warning" pill className="mr-1">
-                              marketing
+                              contacts
                             </Badge>
                             <Badge color="warning" pill className="mr-1">
-                              product
+                              directory
                             </Badge>
                             <Badge color="warning" pill className="mr-1">
-                              launch
+                              communication
                             </Badge>
                           </div>
                           <Button
                             className="mt-4"
                             color="warning"
-                            href="#pablo"
+                            href="#learn-more"
                             onClick={(e) => e.preventDefault()}
                           >
                             Learn more
@@ -250,11 +238,9 @@ class Landing extends React.Component {
                     <div className="icon icon-lg icon-shape icon-shape-success shadow rounded-circle mb-5">
                       <i className="ni ni-settings-gear-65" />
                     </div>
-                    <h3>Awesome features</h3>
+                    <h3>HR Solutions</h3>
                     <p>
-                      The kit comes with three pre-built pages to help you get
-                      started faster. You can change the text and images and
-                      you're good to go.
+                      Our app includes pre-built templates to help you manage employee information, track performance, and enhance overall HR efficiency.
                     </p>
                     <ul className="list-unstyled mt-5">
                       <li className="py-2">
@@ -269,7 +255,7 @@ class Landing extends React.Component {
                           </div>
                           <div>
                             <h6 className="mb-0">
-                              Carefully crafted components
+                              User-friendly components
                             </h6>
                           </div>
                         </div>
@@ -285,7 +271,7 @@ class Landing extends React.Component {
                             </Badge>
                           </div>
                           <div>
-                            <h6 className="mb-0">Amazing page examples</h6>
+                            <h6 className="mb-0">Comprehensive templates</h6>
                           </div>
                         </div>
                       </li>
@@ -301,7 +287,7 @@ class Landing extends React.Component {
                           </div>
                           <div>
                             <h6 className="mb-0">
-                              Super friendly support team
+                              Excellent customer support
                             </h6>
                           </div>
                         </div>
@@ -340,12 +326,10 @@ class Landing extends React.Component {
                         />
                       </svg>
                       <h4 className="display-3 font-weight-bold text-white">
-                        Design System
+                        HR Management
                       </h4>
                       <p className="lead text-italic text-white">
-                        The Arctic Ocean freezes every winter and much of the
-                        sea-ice then thaws every summer, and that process will
-                        continue whatever happens.
+                        Efficiently manage your workforce and streamline HR processes with our comprehensive solution.
                       </p>
                     </blockquote>
                   </Card>
@@ -355,28 +339,19 @@ class Landing extends React.Component {
                     <div className="icon icon-lg icon-shape icon-shape-warning shadow rounded-circle mb-5">
                       <i className="ni ni-settings" />
                     </div>
-                    <h3>Our customers</h3>
+                    <h3>Our Services</h3>
                     <p className="lead">
-                      Don't let your uses guess by attaching tooltips and
-                      popoves to any element. Just make sure you enable them
-                      first via JavaScript.
+                      Enhance productivity by leveraging our powerful HR tools and services. Manage employee data, track performance, and improve internal communication seamlessly.
                     </p>
                     <p>
-                      The kit comes with three pre-built pages to help you get
-                      started faster. You can change the text and images and
-                      you're good to go.
-                    </p>
-                    <p>
-                      The kit comes with three pre-built pages to help you get
-                      started faster. You can change the text and images and
-                      you're good to go.
+                      Our app includes templates to help you get started quickly. Customize the interface to suit your organizational needs.
                     </p>
                     <a
                       className="font-weight-bold text-warning mt-5"
                       href="#pablo"
                       onClick={(e) => e.preventDefault()}
                     >
-                      A beautiful UI Kit for impactful websites
+                      Learn more about our HR solutions
                     </a>
                   </div>
                 </Col>
@@ -405,9 +380,7 @@ class Landing extends React.Component {
                     <div className="pl-4">
                       <h4 className="display-3 text-white">Modern Interface</h4>
                       <p className="text-white">
-                        The Arctic Ocean freezes every winter and much of the
-                        sea-ice then thaws every summer, and that process will
-                        continue whatever.
+                        Our HR management app features a modern, user-friendly interface designed to simplify your HR processes.
                       </p>
                     </div>
                   </div>
@@ -421,12 +394,10 @@ class Landing extends React.Component {
                         </div>
                         <div className="pl-4">
                           <h5 className="title text-success">
-                            Awesome Support
+                            Exceptional Support
                           </h5>
                           <p>
-                            The Arctic Ocean freezes every winter and much of
-                            the sea-ice then thaws every summer, and that
-                            process will continue whatever.
+                            Our support team is here to assist you with any issues or questions, ensuring a smooth experience.
                           </p>
                           <a
                             className="text-success"
@@ -452,9 +423,7 @@ class Landing extends React.Component {
                             Modular Components
                           </h5>
                           <p>
-                            The Arctic Ocean freezes every winter and much of
-                            the sea-ice then thaws every summer, and that
-                            process will continue whatever.
+                            Utilize our modular components to customize and expand your HR management capabilities as needed.
                           </p>
                           <a
                             className="text-warning"
@@ -491,11 +460,9 @@ class Landing extends React.Component {
             <Container>
               <Row className="justify-content-center text-center mb-lg">
                 <Col lg="8">
-                  <h2 className="display-3">The amazing Team</h2>
+                  <h2 className="display-3">Meet Our Team</h2>
                   <p className="lead text-muted">
-                    According to the National Oceanic and Atmospheric
-                    Administration, Ted, Scambos, NSIDClead scentist, puts the
-                    potentially record maximum.
+                    Our dedicated team of professionals is here to help you streamline your HR processes and improve organizational efficiency.
                   </p>
                 </Col>
               </Row>
@@ -511,7 +478,7 @@ class Landing extends React.Component {
                     <div className="pt-4 text-center">
                       <h5 className="title">
                         <span className="d-block mb-1">Ryan Tompson</span>
-                        <small className="h6 text-muted">Web Developer</small>
+                        <small className="h6 text-muted">HR Specialist</small>
                       </h5>
                       <div className="mt-3">
                         <Button
@@ -536,7 +503,7 @@ class Landing extends React.Component {
                           href="#pablo"
                           onClick={(e) => e.preventDefault()}
                         >
-                          <i className="fa fa-dribbble" />
+                          <i className="fa fa-linkedin" />
                         </Button>
                       </div>
                     </div>
@@ -554,7 +521,7 @@ class Landing extends React.Component {
                       <h5 className="title">
                         <span className="d-block mb-1">Romina Hadid</span>
                         <small className="h6 text-muted">
-                          Marketing Strategist
+                          HR Manager
                         </small>
                       </h5>
                       <div className="mt-3">
@@ -580,7 +547,7 @@ class Landing extends React.Component {
                           href="#pablo"
                           onClick={(e) => e.preventDefault()}
                         >
-                          <i className="fa fa-dribbble" />
+                          <i className="fa fa-linkedin" />
                         </Button>
                       </div>
                     </div>
@@ -622,7 +589,7 @@ class Landing extends React.Component {
                           href="#pablo"
                           onClick={(e) => e.preventDefault()}
                         >
-                          <i className="fa fa-dribbble" />
+                          <i className="fa fa-linkedin" />
                         </Button>
                       </div>
                     </div>
@@ -664,7 +631,7 @@ class Landing extends React.Component {
                           href="#pablo"
                           onClick={(e) => e.preventDefault()}
                         >
-                          <i className="fa fa-dribbble" />
+                          <i className="fa fa-linkedin" />
                         </Button>
                       </div>
                     </div>
@@ -680,12 +647,10 @@ class Landing extends React.Component {
                   <Row className="align-items-center">
                     <Col lg="8">
                       <h3 className="text-white">
-                        We made website building easier for you.
+                        Simplifying HR Management for You
                       </h3>
                       <p className="lead text-white mt-3">
-                        I will be the leader of a company that ends up being
-                        worth billions of dollars, because I got the answers. I
-                        understand culture.
+                        Our app is designed to make HR management easy and efficient, helping you focus on what matters most.
                       </p>
                     </Col>
                     <Col className="ml-lg-auto" lg="3">
@@ -693,10 +658,10 @@ class Landing extends React.Component {
                         block
                         className="btn-white"
                         color="default"
-                        href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-landing-page"
+                        href="#download"
                         size="lg"
                       >
-                        Download React
+                        Get Started
                       </Button>
                     </Col>
                   </Row>
@@ -708,12 +673,9 @@ class Landing extends React.Component {
             <Container className="pt-lg pb-300">
               <Row className="text-center justify-content-center">
                 <Col lg="10">
-                  <h2 className="display-3 text-white">Build something</h2>
+                  <h2 className="display-3 text-white">Enhance Productivity</h2>
                   <p className="lead text-white">
-                    According to the National Oceanic and Atmospheric
-                    Administration, Ted, Scambos, NSIDClead scentist, puts the
-                    potentially record low maximum sea ice extent tihs year down
-                    to low ice.
+                    Leverage our HR management tools to streamline your processes, enhance employee engagement, and drive organizational success.
                   </p>
                 </Col>
               </Row>
@@ -722,30 +684,27 @@ class Landing extends React.Component {
                   <div className="icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary">
                     <i className="ni ni-settings text-primary" />
                   </div>
-                  <h5 className="text-white mt-3">Building tools</h5>
+                  <h5 className="text-white mt-3">Manage Tools</h5>
                   <p className="text-white mt-3">
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
+                    Access and utilize various tools to manage employee data, track performance, and streamline HR operations.
                   </p>
                 </Col>
                 <Col lg="4">
                   <div className="icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary">
                     <i className="ni ni-ruler-pencil text-primary" />
                   </div>
-                  <h5 className="text-white mt-3">Grow your market</h5>
+                  <h5 className="text-white mt-3">Optimize Processes</h5>
                   <p className="text-white mt-3">
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
+                    Implement efficient workflows and optimize your HR processes to enhance overall productivity.
                   </p>
                 </Col>
                 <Col lg="4">
                   <div className="icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary">
                     <i className="ni ni-atom text-primary" />
                   </div>
-                  <h5 className="text-white mt-3">Launch time</h5>
+                  <h5 className="text-white mt-3">Seamless Integration</h5>
                   <p className="text-white mt-3">
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
+                    Integrate our tools seamlessly with your existing systems to ensure a smooth and efficient HR management experience.
                   </p>
                 </Col>
               </Row>
@@ -773,9 +732,9 @@ class Landing extends React.Component {
                 <Col lg="8">
                   <Card className="bg-gradient-secondary shadow">
                     <CardBody className="p-lg-5">
-                      <h4 className="mb-1">Want to work with us?</h4>
+                      <h4 className="mb-1">Want to Join Our Team?</h4>
                       <p className="mt-0">
-                        Your project is very important to us.
+                        We value your skills and expertise. Let's work together to revolutionize HR management.
                       </p>
                       <FormGroup
                         className={classnames("mt-5", {

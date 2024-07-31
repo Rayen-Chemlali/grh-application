@@ -17,15 +17,17 @@ const Profile = () => {
 
     const fetchProfile = async () => {
       const user =  JSON.parse(localStorage.getItem("user"));
+      if(user){
       const userId = user.profile.id; 
 
       try {
         const response = await axios.get(`http://localhost:3000/profile/${userId}`);
         setProfile(response.data);
+        console.log(response.data.image)
       } catch (error) {
         console.error("There was an error fetching the profile!", error);
       }
-    };
+    };}
 
     fetchProfile();
   }, []);
@@ -72,7 +74,7 @@ const Profile = () => {
                         <img
                           alt="..."
                           className="rounded-circle"
-                          src={profile.image ? profile.image : require("assets/img/theme/team-1-800x800.jpg")}
+                          src={profile.image ? `http://localhost:3000/uploads/${profile.image}` : require("assets/img/theme/team-1-800x800.jpg")}
                         />
                       </a>
                     </div>
@@ -82,15 +84,7 @@ const Profile = () => {
                     lg="4"
                   >
                     <div className="card-profile-actions py-4 mt-lg-0">
-                      <Button
-                        className="mr-4"
-                        color="info"
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        size="sm"
-                      >
-                        Connect
-                      </Button>
+
                       <Button
                         className="float-right"
                         color="default"
@@ -102,19 +96,31 @@ const Profile = () => {
                       </Button>
                     </div>
                   </Col>
+                  <div className="shape shape-style-1 shape-default">
+              
+
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span >
+              </span>
+            </div>
                   <Col className="order-lg-1" lg="4">
                     <div className="card-profile-stats d-flex justify-content-center">
                       <div>
-                        <span className="heading">22</span>
-                        <span className="description">Friends</span>
+                        <span className="heading">your</span>
+                        <span className="description">-</span>
                       </div>
+            
+
                       <div>
-                        <span className="heading">10</span>
-                        <span className="description">Photos</span>
-                      </div>
-                      <div>
-                        <span className="heading">89</span>
-                        <span className="description">Comments</span>
+                        <span className="heading">Profile</span>
+                        <span className="description">-</span>
                       </div>
                     </div>
                   </Col>
