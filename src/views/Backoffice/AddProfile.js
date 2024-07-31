@@ -19,115 +19,108 @@ import SimpleFooter from "components/Footers/SimpleFooter.js";
 import axios from "axios";
 
 const AddProfile = () => {
-  const [bio, setBio] = useState("");
-  const [website, setWebsite] = useState("");
-  const [location, setLocation] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [username, setUsername] = useState("");
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [pole, setPole] = useState("");
+  const [domaine, setDomaine] = useState("");
+  const [metier, setMetier] = useState("");
+  const [filiere, setFiliere] = useState("");
+  const [lieuDeTravail, setLieuDeTravail] = useState("");
+  const [responsable, setResponsable] = useState("");
+  const [email, setEmail] = useState("");
+  const [civilite, setCivilite] = useState("");
+  const [sexe, setSexe] = useState("");
+  const [nationalite, setNationalite] = useState("");
+  const [dateEtLieuDeNaissance, setDateEtLieuDeNaissance] = useState("");
+  const [adresseDomicile, setAdresseDomicile] = useState("");
   const [image, setImage] = useState(null);
-  const [usernames, setUsernames] = useState([]);
-  const [bioError, setBioError] = useState("");
-  const [websiteError, setWebsiteError] = useState("");
-  const [locationError, setLocationError] = useState("");
-  const [phoneNumberError, setPhoneNumberError] = useState("");
-  const [birthDateError, setBirthDateError] = useState("");
-  const [usernameError, setUsernameError] = useState("");
-  const [imageError, setImageError] = useState("");
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState("");
+
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
+  const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
-    const fetchUsernames = async () => {
+    const fetchEmployees = async () => {
       try {
         const response = await axios.get("http://localhost:3000/users");
-        const usernames = response.data.map(user => user.username);
-        setUsernames(usernames);
+        setEmployees(response.data);
       } catch (error) {
-        console.error("Error fetching usernames:", error);
+        console.error("Error fetching managers:", error);
       }
     };
-
-    fetchUsernames();
+    fetchEmployees();
   }, []);
 
-  const validateBio = () => {
-    if (!bio) {
-      setBioError("Bio is required.");
-    } else {
-      setBioError("");
-    }
-  };
+  const handleInputChange = async (e) => {
+    const { name, value, files } = e.target;
 
-  const validateWebsite = () => {
-    if (!website) {
-      setWebsiteError("Website is required.");
-    } else {
-      setWebsiteError("");
-    }
-  };
+    if (name === "employeeId") {
+      setSelectedEmployeeId(value);
+      if (value) {
+        try {
+          const user =  JSON.parse(localStorage.getItem("user"));
+          const response = await axios.get(`http://localhost:3000/profile/${user.profile.id}`);
+          const profile = response.data;
 
-  const validateLocation = () => {
-    if (!location) {
-      setLocationError("Location is required.");
-    } else {
-      setLocationError("");
+          setNom(profile.nom || "");
+          setPrenom(profile.prenom || "");
+          setPole(profile.pole || "");
+          setDomaine(profile.domaine || "");
+          setMetier(profile.metier || "");
+          setFiliere(profile.filiere || "");
+          setLieuDeTravail(profile.lieuDeTravail || "");
+          setResponsable(profile.responsable || "");
+          setEmail(profile.email || "");
+          setCivilite(profile.civilite || "");
+          setSexe(profile.sexe || "");
+          setNationalite(profile.nationalite || "");
+          setDateEtLieuDeNaissance(profile.dateEtLieuDeNaissance || "");
+          setAdresseDomicile(profile.adresseDomicile || "");
+          setImage(profile.image || null);
+        } catch (error) {
+          console.error("Error fetching profile", error);
+        }
+      } else {
+        setNom("");
+        setPrenom("");
+        setPole("");
+        setDomaine("");
+        setMetier("");
+        setFiliere("");
+        setLieuDeTravail("");
+        setResponsable("");
+        setEmail("");
+        setCivilite("");
+        setSexe("");
+        setNationalite("");
+        setDateEtLieuDeNaissance("");
+        setAdresseDomicile("");
+        setImage(null);
+      }
     }
-  };
 
-  const validatePhoneNumber = () => {
-    if (!phoneNumber) {
-      setPhoneNumberError("Phone Number is required.");
-    } else {
-      setPhoneNumberError("");
-    }
-  };
-
-  const validateBirthDate = () => {
-    if (!birthDate) {
-      setBirthDateError("Birth Date is required.");
-    } else {
-      setBirthDateError("");
-    }
-  };
-
-  const validateUsername = () => {
-    if (!username) {
-      setUsernameError("Username is required.");
-    } else {
-      setUsernameError("");
-    }
-  };
-
-  const validateImage = () => {
-    if (!image) {
-      setImageError("Image is required.");
-    } else {
-      setImageError("");
-    }
+    if (name === "nom") setNom(value);
+    if (name === "prenom") setPrenom(value);
+    if (name === "pole") setPole(value);
+    if (name === "domaine") setDomaine(value);
+    if (name === "metier") setMetier(value);
+    if (name === "filiere") setFiliere(value);
+    if (name === "lieuDeTravail") setLieuDeTravail(value);
+    if (name === "responsable") setResponsable(value);
+    if (name === "email") setEmail(value);
+    if (name === "civilite") setCivilite(value);
+    if (name === "sexe") setSexe(value);
+    if (name === "nationalite") setNationalite(value);
+    if (name === "dateEtLieuDeNaissance") setDateEtLieuDeNaissance(value);
+    if (name === "adresseDomicile") setAdresseDomicile(value);
+    if (name === "image") setImage(files[0]);
   };
 
   const validateForm = () => {
-    validateBio();
-    validateWebsite();
-    validateLocation();
-    validatePhoneNumber();
-    validateBirthDate();
-    validateUsername();
-    validateImage();
-    return !bioError && !websiteError && !locationError && !phoneNumberError && !birthDateError && !usernameError && !imageError;
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "bio") setBio(value);
-    if (name === "website") setWebsite(value);
-    if (name === "location") setLocation(value);
-    if (name === "phoneNumber") setPhoneNumber(value);
-    if (name === "birthDate") setBirthDate(value);
-    if (name === "username") setUsername(value);
-    if (name === "image") setImage(files[0]);
+    // Perform any necessary validation here
+    return true;
   };
 
   const handleAddProfile = async (e) => {
@@ -135,31 +128,58 @@ const AddProfile = () => {
     if (!isSubmit) {
       setIsSubmit(true);
       if (validateForm()) {
+        if (!selectedEmployeeId) {
+          setErrorMessage("Please select a manager.");
+          setIsSubmit(false);
+          return;
+        }
+
         const formData = new FormData();
-        formData.append("bio", bio);
-        formData.append("website", website);
-        formData.append("location", location);
-        formData.append("phoneNumber", phoneNumber);
-        formData.append("birthDate", birthDate);
-        formData.append("username", username);
+        formData.append("nom", nom);
+        formData.append("prenom", prenom);
+        formData.append("pole", pole);
+        formData.append("domaine", domaine);
+        formData.append("metier", metier);
+        formData.append("filiere", filiere);
+        formData.append("lieuDeTravail", lieuDeTravail);
+        formData.append("responsable", responsable);
+        formData.append("email", email);
+        formData.append("civilite", civilite);
+        formData.append("sexe", sexe);
+        formData.append("nationalite", nationalite);
+        formData.append("dateEtLieuDeNaissance", dateEtLieuDeNaissance);
+        formData.append("adresseDomicile", adresseDomicile);
         if (image) {
           formData.append("image", image);
         }
-
         try {
-          const response = await axios.post("http://localhost:3000/profile", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
+          console.log("id", selectedEmployeeId);
+          const response = await axios.post(
+            `http://localhost:3000/profile/${selectedEmployeeId}`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
           setMessage("Profile created successfully!");
-          setBio("");
-          setWebsite("");
-          setLocation("");
-          setPhoneNumber("");
-          setBirthDate("");
-          setUsername("");
+          setNom("");
+          setPrenom("");
+          setPole("");
+          setDomaine("");
+          setMetier("");
+          setFiliere("");
+          setLieuDeTravail("");
+          setResponsable("");
+          setEmail("");
+          setCivilite("");
+          setSexe("");
+          setNationalite("");
+          setDateEtLieuDeNaissance("");
+          setAdresseDomicile("");
           setImage(null);
+          setSelectedEmployeeId("");
           setErrorMessage("");
         } catch (error) {
           setErrorMessage("There was an error creating the profile!");
@@ -202,6 +222,28 @@ const AddProfile = () => {
                     </div>
                     <Form role="form" onSubmit={handleAddProfile}>
                       <FormGroup>
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-single-02" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            type="select"
+                            name="employeeId"
+                            value={selectedEmployeeId}
+                            onChange={handleInputChange}
+                          >
+                            <option value="">Select Employee</option>
+                            {employees.map((manager) => (
+                              <option key={manager.id} value={manager.id}>
+                                {manager.username}
+                              </option>
+                            ))}
+                          </Input>
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
                         <InputGroup className="input-group-alternative mb-3">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
@@ -209,33 +251,93 @@ const AddProfile = () => {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="Bio"
+                            placeholder="Nom"
                             type="text"
-                            name="bio"
-                            value={bio}
+                            name="nom"
+                            value={nom}
                             onChange={handleInputChange}
-                            onBlur={validateBio}
                           />
                         </InputGroup>
-                        {bioError && <div className="text-danger">{bioError}</div>}
                       </FormGroup>
                       <FormGroup>
                         <InputGroup className="input-group-alternative mb-3">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
-                              <i className="ni ni-world" />
+                              <i className="ni ni-single-copy-04" />
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="Website"
+                            placeholder="Prenom"
                             type="text"
-                            name="website"
-                            value={website}
+                            name="prenom"
+                            value={prenom}
                             onChange={handleInputChange}
-                            onBlur={validateWebsite}
                           />
                         </InputGroup>
-                        {websiteError && <div className="text-danger">{websiteError}</div>}
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-building" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Pole"
+                            type="text"
+                            name="pole"
+                            value={pole}
+                            onChange={handleInputChange}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-briefcase-24" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Domaine"
+                            type="text"
+                            name="domaine"
+                            value={domaine}
+                            onChange={handleInputChange}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-briefcase-24" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Metier"
+                            type="text"
+                            name="metier"
+                            value={metier}
+                            onChange={handleInputChange}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-hat-3" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Filiere"
+                            type="text"
+                            name="filiere"
+                            value={filiere}
+                            onChange={handleInputChange}
+                          />
+                        </InputGroup>
                       </FormGroup>
                       <FormGroup>
                         <InputGroup className="input-group-alternative mb-3">
@@ -245,51 +347,13 @@ const AddProfile = () => {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="Location"
+                            placeholder="Lieu de Travail"
                             type="text"
-                            name="location"
-                            value={location}
+                            name="lieuDeTravail"
+                            value={lieuDeTravail}
                             onChange={handleInputChange}
-                            onBlur={validateLocation}
                           />
                         </InputGroup>
-                        {locationError && <div className="text-danger">{locationError}</div>}
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-mobile-button" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Phone Number"
-                            type="text"
-                            name="phoneNumber"
-                            value={phoneNumber}
-                            onChange={handleInputChange}
-                            onBlur={validatePhoneNumber}
-                          />
-                        </InputGroup>
-                        {phoneNumberError && <div className="text-danger">{phoneNumberError}</div>}
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-calendar-grid-58" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Birth Date"
-                            type="date"
-                            name="birthDate"
-                            value={birthDate}
-                            onChange={handleInputChange}
-                            onBlur={validateBirthDate}
-                          />
-                        </InputGroup>
-                        {birthDateError && <div className="text-danger">{birthDateError}</div>}
                       </FormGroup>
                       <FormGroup>
                         <InputGroup className="input-group-alternative mb-3">
@@ -299,21 +363,109 @@ const AddProfile = () => {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            type="select"
-                            name="username"
-                            value={username}
+                            placeholder="Responsable"
+                            type="text"
+                            name="responsable"
+                            value={responsable}
                             onChange={handleInputChange}
-                            onBlur={validateUsername}
-                          >
-                            <option value="">Select Employee</option>
-                            {usernames.map((username, index) => (
-                              <option key={index} value={username}>
-                                {username}
-                              </option>
-                            ))}
-                          </Input>
+                          />
                         </InputGroup>
-                        {usernameError && <div className="text-danger">{usernameError}</div>}
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-email-83" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Email"
+                            type="email"
+                            name="email"
+                            value={email}
+                            onChange={handleInputChange}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-circle-08" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Civilite"
+                            type="text"
+                            name="civilite"
+                            value={civilite}
+                            onChange={handleInputChange}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-favourite-28" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Sexe"
+                            type="text"
+                            name="sexe"
+                            value={sexe}
+                            onChange={handleInputChange}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-world-2" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Nationalite"
+                            type="text"
+                            name="nationalite"
+                            value={nationalite}
+                            onChange={handleInputChange}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-calendar-grid-58" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Date et Lieu de Naissance"
+                            type="text"
+                            name="dateEtLieuDeNaissance"
+                            value={dateEtLieuDeNaissance}
+                            onChange={handleInputChange}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-square-pin" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Adresse Domicile"
+                            type="text"
+                            name="adresseDomicile"
+                            value={adresseDomicile}
+                            onChange={handleInputChange}
+                          />
+                        </InputGroup>
                       </FormGroup>
                       <FormGroup>
                         <InputGroup className="input-group-alternative mb-3">
@@ -326,10 +478,8 @@ const AddProfile = () => {
                             type="file"
                             name="image"
                             onChange={handleInputChange}
-                            onBlur={validateImage}
                           />
                         </InputGroup>
-                        {imageError && <div className="text-danger">{imageError}</div>}
                       </FormGroup>
                       {message && (
                         <div className="text-center mb-3 alert alert-success">

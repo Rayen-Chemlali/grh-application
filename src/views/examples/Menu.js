@@ -9,6 +9,7 @@ import {
     Nav,
     Media,
   } from "reactstrap";
+import axios from 'axios';
 
 
 
@@ -18,30 +19,18 @@ const PopupDemo = () => {
 
     const navigate = useNavigate();
     const [decryptedToken, setDecryptedToken] = useState(null);
+    const [username , setUsername] = useState("")
+    const [role , setRole] = useState("")
 
     useEffect(() => {
-      const encryptedToken = localStorage.getItem('token');
-      const secretKey = 'abc123';
-  
-      const decryptToken = (token, key) => {
-        try {
-          const bytes = CryptoJS.AES.decrypt(token, key);
-          const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
-          return JSON.parse(decryptedData);
-        } catch (e) {
-          console.error('Failed to decrypt token', e);
-          return null;
-        }
-      };
-  
-      if (encryptedToken) {
-        const tokenData = decryptToken(encryptedToken, secretKey);
-        setDecryptedToken(tokenData);
-      }
-      console.log("token read",encryptedToken)
+      const user =  JSON.parse(localStorage.getItem("user"));
+
+      setUsername(user.username);
+      setRole(user.role.name);
+      console.log("username",user.username);
+      console.log(user.role.name);
+
     }, []);
-
-
     const handleLogout = () => {
         localStorage.removeItem('token');
         navigate("/login-page");
@@ -54,14 +43,14 @@ const PopupDemo = () => {
           <DropdownToggle className="pr-0" nav>
             <Media className="align-items-center">
               <span className="avatar avatar-sm rounded-circle">
-                <img
-                  alt="..."
-                  src={require("../../assets/img/theme/team-1-800x800.jpg")}
-                />
+              <img
+    alt="..."
+    src={"path/to/default/image.jpg"}
+  />
               </span>
               <Media className="ml-2 d-none d-lg-block">
                 <span className="mb-0 text-sm font-weight-bold">
-                  oussema amri
+                  {username}
                 </span>
               </Media>
             </Media>
@@ -74,14 +63,14 @@ const PopupDemo = () => {
               <i className="ni ni-single-02" />
               <span>My profile</span>
             </DropdownItem>
-            <DropdownItem to="/users" tag={Link}>
+            { role === "admin" &&(<DropdownItem to="/users" tag={Link}>
               <i className="ni ni-settings-gear-65" />
               <span>Users</span>
-            </DropdownItem>
-            <DropdownItem to="/register-page" tag={Link}>
+            </DropdownItem>)}
+            { role === "admin" &&(<DropdownItem to="/register-page" tag={Link}>
               <i className="ni ni-calendar-grid-58" />
               <span>Register</span>
-            </DropdownItem>
+            </DropdownItem>)}
             <DropdownItem to="/admin/user-profile" tag={Link}>
               <i className="ni ni-support-16" />
               <span>Support</span>
