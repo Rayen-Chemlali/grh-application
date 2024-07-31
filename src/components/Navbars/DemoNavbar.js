@@ -55,12 +55,14 @@ const DemoNavbar = () => {
           id="navbar-main"
         >
           <Container>
-            <NavbarBrand className="mr-lg-5" to="/" tag={Link}>
-              <img
-                alt="..."
-                src={require("assets/img/brand/argon-react-white.png")}
-              />
-            </NavbarBrand>
+          <NavbarBrand className="mr-lg-5" to="/" tag={Link}>
+  <img
+    alt="..."
+    src={require("assets/img/brand/RHP2.png")}
+    style={{ width: '150px', height: '75px' }} // Adjust these values as needed
+  />
+</NavbarBrand>
+
             <button className="navbar-toggler" id="navbar_global">
               <span className="navbar-toggler-icon" />
             </button>
@@ -93,7 +95,7 @@ const DemoNavbar = () => {
                 <UncontrolledDropdown nav>
                   <DropdownToggle nav>
                     <i className="ni ni-ui-04 d-lg-none mr-1" />
-                    <span className="nav-link-inner--text">Components</span>
+                    <span className="nav-link-inner--text">Features</span>
                   </DropdownToggle>
                   <DropdownMenu className="dropdown-menu-xl">
                     <div className="dropdown-menu-inner">
@@ -107,11 +109,10 @@ const DemoNavbar = () => {
                         </div>
                         <Media body className="ml-3">
                           <h6 className="heading text-primary mb-md-1">
-                            Getting started
+                          Human Resources Overview
                           </h6>
                           <p className="description d-none d-md-inline-block mb-0">
-                            Learn how to use Argon compiling Scss, change
-                            brand colors and more.
+                          Learn how to manage employee profiles, streamline account settings, and optimize HR operations.
                           </p>
                         </Media>
                       </Media>

@@ -28,10 +28,12 @@ const PopupDemo = () => {
       console.log("username", user.username);
       console.log(user.role.name);
     }
+
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     navigate("/login-page");
   };
 
