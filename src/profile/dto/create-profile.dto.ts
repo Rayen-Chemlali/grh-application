@@ -1,31 +1,18 @@
-// create-profile.dto.ts
-import { IsNotEmpty, IsOptional, IsString, IsDateString } from 'class-validator';
-
-export class CreateProfileDto {
-  @IsOptional()
-  @IsString()
-  bio?: string;
-
-  @IsOptional()
-  @IsString()
-  website?: string;
-
-  @IsOptional()
-  @IsString()
-  location?: string;
-
-  @IsOptional()
-  @IsString()
-  phoneNumber?: string;
-
-  @IsOptional()
-  @IsDateString()
-  birthDate?: Date;
-
-  @IsOptional()
-  @IsString()
+export class ProfileDTO {
+  readonly nom?: string;
+  readonly prenom?: string;
+  readonly pole?: string;
+  readonly domaine?: string;
+  readonly metier?: string;
+  readonly filiere?: string;
+  readonly lieuDeTravail?: string;
+  readonly responsable?: string;
+  readonly email?: string;
+  readonly civilite?: string;
+  readonly sexe?: string;
+  readonly nationalite?: string;
+  readonly dateEtLieuDeNaissance?: string;
+  readonly adresseDomicile?: string;
   image?: string;
-
-  @IsNotEmpty()
-  userId: number;
+  readonly userId?: number;
 }

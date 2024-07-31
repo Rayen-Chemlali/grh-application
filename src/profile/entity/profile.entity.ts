@@ -13,24 +13,51 @@ export class ProfileEntity {
   id: number;
 
   @Column({ nullable: true })
-  bio: string;
+  nom: string;
 
   @Column({ nullable: true })
-  website: string;
+  prenom: string;
 
   @Column({ nullable: true })
-  location: string;
+  pole: string;
 
   @Column({ nullable: true })
-  phoneNumber: string;
+  domaine: string;
 
   @Column({ nullable: true })
-  birthDate: Date;
+  metier: string;
+
+  @Column({ nullable: true })
+  filiere: string;
+
+  @Column({ nullable: true })
+  lieuDeTravail: string;
+
+  @Column({ nullable: true })
+  responsable: string;
+
+  @Column({ nullable: true })
+  email: string;
+
+  @Column({ nullable: true })
+  civilite: string;
+
+  @Column({ nullable: true })
+  sexe: string;
+
+  @Column({ nullable: true })
+  nationalite: string;
+
+  @Column({ nullable: true })
+  dateEtLieuDeNaissance: string;
+
+  @Column({ nullable: true })
+  adresseDomicile: string;
 
   @Column({ nullable: true })
   image: string;
 
-  @OneToOne(() => UserEntity)
+  @OneToOne(() => UserEntity, (user) => user.profile)
   @JoinColumn({ name: "user_id" })
   user: UserEntity;
 }
