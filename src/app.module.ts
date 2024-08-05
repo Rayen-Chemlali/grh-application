@@ -9,7 +9,8 @@ import { RoleModule } from "./role/role.module";
 import { ProfileModule } from "./profile/profile.module";
 import { join } from "path";
 import { ServeStaticModule } from "@nestjs/serve-static";
-import { DocumentModule } from './document/document.module';
+import { DocumentModule } from "./document/document.module";
+import { CongeModule } from "./conge/conge.module";
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { DocumentModule } from './document/document.module';
       serveRoot: "/uploads",
     }),
     DocumentModule,
+    CongeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
