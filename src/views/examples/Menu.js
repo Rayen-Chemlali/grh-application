@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'; 
-import CryptoJS from 'crypto-js';
+// PopupDemo.js
+import React from 'react'; 
 import { Link, useNavigate } from "react-router-dom";
 import {
   DropdownMenu,
@@ -9,27 +9,12 @@ import {
   Nav,
   Media,
 } from "reactstrap";
-import axios from 'axios';
+
+import useLocalStorage from '../../useLocalStorage'; 
 
 const PopupDemo = () => {
   const navigate = useNavigate();
-  const [decryptedToken, setDecryptedToken] = useState(null);
-  const [username, setUsername] = useState("");
-  const [role, setRole] = useState("");
-  const [profile, setProfile] = useState(null);
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    
-    if (user) {
-      setUsername(user.username);
-      setRole(user.role.name);
-      setProfile(user.profile);
-      console.log("username", user.username);
-      console.log(user.role.name);
-    }
-
-  }, []);
+  const user = useLocalStorage('user'); // Use the custom hook to get user data
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -45,12 +30,12 @@ const PopupDemo = () => {
             <span className="avatar avatar-sm rounded-circle">
               <img
                 alt="..."
-                src={profile && profile.image ? `http://localhost:3000/uploads/${profile.image}` : require("assets/img/theme/team-1-800x800.jpg")}
+                src={user?.profile?.image ? `http://localhost:3000/uploads/${user.profile.image}` : require("assets/img/theme/team-1-800x800.jpg")}
               />
             </span>
             <Media className="ml-2 d-none d-lg-block">
               <span className="mb-0 text-sm font-weight-bold">
-                {username}
+                {user?.username}
               </span>
             </Media>
           </Media>
@@ -63,24 +48,34 @@ const PopupDemo = () => {
             <i className="ni ni-single-02" />
             <span>My profile</span>
           </DropdownItem>
-          {role === "admin" && (
+          {user?.role?.name === "admin" && (
             <DropdownItem to="/users" tag={Link}>
               <i className="ni ni-settings-gear-65" />
               <span>Users</span>
             </DropdownItem>
           )}
-          {role === "admin" && (
+          {user?.role?.name === "admin" && (
             <DropdownItem to="/register-page" tag={Link}>
               <i className="ni ni-calendar-grid-58" />
               <span>Register</span>
             </DropdownItem>
           )}
-          {role === "admin" && (
+          {user?.role?.name === "admin" && (
             <DropdownItem to="/profile" tag={Link}>
               <i className="ni ni-support-16" />
               <span>Add Profile</span>
             </DropdownItem>
+          )} 
+          {(user?.role?.name === "admin" | user?.role?.name === "manager")  && (
+            <DropdownItem to="/manage" tag={Link}>
+              <i className="ni ni-support-16" />
+              <span>manage conge</span>
+            </DropdownItem>
           )}
+            <DropdownItem to="/conge" tag={Link}>
+              <i className="ni ni-calendar-grid-58" />
+              <span>conge</span>
+            </DropdownItem>
           <DropdownItem divider />
           <DropdownItem href="#pablo" onClick={handleLogout}>
             <i className="ni ni-user-run" />

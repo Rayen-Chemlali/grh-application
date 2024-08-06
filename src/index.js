@@ -16,6 +16,9 @@ import PrivateRoutes from "utils/privateRoutes";
 import UserTablePage from "./views/Backoffice/UserTablePage";
 import AddProfile from "views/Backoffice/AddProfile";
 import DocumentManagementPage from "./views/Backoffice/DocumentManagemntPage";
+import LeaveManagement from "views/Backoffice/LeaveManagement";
+import SubmitLeaveRequest from "views/Backoffice/SubmitLeaveRequest";
+import ApproveRejectLeaveRequest from "views/Backoffice/ApproveRejectLeaveRequest";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -29,8 +32,11 @@ root.render(
           <Route path="/users" element={<UserTablePage />} />
           <Route path="/profile" element={<AddProfile />} />
           <Route path="/documents/:userId" element={<DocumentManagementPage />} />
-        </Route>
+          <Route path="/conge" element={<SubmitLeaveRequest />} />
+          <Route path="/manage" element={<ApproveRejectLeaveRequest />} />
+        </Route> 
         <Route path="/" element={<Landing />} />
+        <Route path="/leav" element={<LeaveManagement />} />
         <Route path="/index" element={<Index />} />
         <Route path="/home-page" element={<Landing />} />
         <Route path="/login-page" element={<Login />} />
