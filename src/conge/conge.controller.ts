@@ -28,6 +28,13 @@ export class CongeController {
     return this.congeService.getConges(managerId);
   }
 
+  @Get("employee/:employeeId")
+  async getConge(
+    @Param("employeeId") employeeId: number,
+  ): Promise<CongeEntity[]> {
+    return this.congeService.getConge(employeeId);
+  }
+
   @Patch(":id/approve")
   async approveConge(@Param("id") id: number): Promise<CongeEntity> {
     return this.congeService.approveConge(id);

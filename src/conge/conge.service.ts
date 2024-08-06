@@ -56,6 +56,13 @@ export class CongeService {
     });
   }
 
+  async getConge(employeeId: number): Promise<CongeEntity[]> {
+    return this.congeRepository.find({
+      where: { employee: { id: employeeId } },
+      relations: ["employee"],
+    });
+  }
+
   async approveConge(id: number): Promise<CongeEntity> {
     const conge = await this.congeRepository.findOne({ where: { id } });
     conge.status = "Approved";
