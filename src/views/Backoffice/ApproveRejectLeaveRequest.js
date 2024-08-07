@@ -19,8 +19,10 @@ const ApproveRejectLeaveRequest = () => {
   useEffect(() => {
     const fetchLeaveRequests = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/conge/9'); 
-        setLeaveRequests(response.data);
+        const user =  JSON.parse(localStorage.getItem("user"));
+        if (user.role.name === "manager" | user.role.name === "admin"){
+        const response = await axios.get(`http://localhost:3000/conge/${user.id}`); 
+        setLeaveRequests(response.data);}
       } catch (error) {
         console.error('Error fetching leave requests:', error);
       }
@@ -42,6 +44,19 @@ const ApproveRejectLeaveRequest = () => {
     }
   };
 
+  const handleeEdit = async (id) => {
+    try {
+      await axios.patch(`http://localhost:3000/conge/${id}/pending`);
+      setLeaveRequests((prevRequests) =>
+        prevRequests.map((request) =>
+          request.id === id ? { ...request, status: 'Pending' } : request
+        )
+      );
+    } catch (error) {
+      console.error('Error approving leave request:', error);
+    }
+  };
+  
   const handleReject = async (id) => {
     try {
       await axios.patch(`http://localhost:3000/conge/${id}/reject`);
@@ -81,7 +96,7 @@ const ApproveRejectLeaveRequest = () => {
               <Table responsive>
                 <thead>
                   <tr>
-                    <th>ID</th>
+                    <th>Name</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Reason</th>
@@ -92,7 +107,7 @@ const ApproveRejectLeaveRequest = () => {
                 <tbody>
                   {leaveRequests.map((request) => (
                     <tr key={request.id}>
-                      <td>{request.id}</td>
+                      <td>{request.employee.username}</td>
                       <td>{new Date(request.startDate).toLocaleDateString()}</td>
                       <td>{new Date(request.endDate).toLocaleDateString()}</td>
                       <td>{request.reason}</td>
@@ -117,6 +132,19 @@ const ApproveRejectLeaveRequest = () => {
                             </Button>
                           </>
                         )}
+                        {request.status !== 'Pending' && (
+                          <>
+                            <Button
+                              color="success"
+                              size="sm"
+                              onClick={() => handleeEdit(request.id)}
+                              className="mr-2"
+                            >
+                              Edit
+                            </Button>
+                          </>
+                        )}
+                        
                       </td>
                     </tr>
                   ))}

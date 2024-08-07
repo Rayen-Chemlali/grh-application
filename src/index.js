@@ -19,6 +19,7 @@ import DocumentManagementPage from "./views/Backoffice/DocumentManagemntPage";
 import LeaveManagement from "views/Backoffice/LeaveManagement";
 import SubmitLeaveRequest from "views/Backoffice/SubmitLeaveRequest";
 import ApproveRejectLeaveRequest from "views/Backoffice/ApproveRejectLeaveRequest";
+import ViewLeaveRequests from "views/Backoffice/ViewLeaveRequests";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -34,6 +35,7 @@ root.render(
           <Route path="/documents/:userId" element={<DocumentManagementPage />} />
           <Route path="/conge" element={<SubmitLeaveRequest />} />
           <Route path="/manage" element={<ApproveRejectLeaveRequest />} />
+          <Route path="/viewconge" element={<ViewLeaveRequests />} />
         </Route> 
         <Route path="/" element={<Landing />} />
         <Route path="/leav" element={<LeaveManagement />} />
