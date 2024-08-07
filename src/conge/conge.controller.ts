@@ -44,4 +44,8 @@ export class CongeController {
   async rejectConge(@Param("id") id: number): Promise<CongeEntity> {
     return this.congeService.rejectConge(id);
   }
+  @Patch(":id/pending")
+  async pendingConge(@Param("id") id: number): Promise<CongeEntity> {
+    return this.congeService.pendingConge(id);
+  }
 }

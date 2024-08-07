@@ -74,4 +74,9 @@ export class CongeService {
     conge.status = "Rejected";
     return this.congeRepository.save(conge);
   }
+  async pendingConge(id: number): Promise<CongeEntity> {
+    const conge = await this.congeRepository.findOne({ where: { id } });
+    conge.status = "Pending";
+    return this.congeRepository.save(conge);
+  }
 }
