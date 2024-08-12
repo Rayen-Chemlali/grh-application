@@ -125,4 +125,16 @@ export class UserService {
     }
     await this.userRepository.remove(user);
   }
+  async getManagedEmployees(managerId: number): Promise<UserEntity[]> {
+    const manager = await this.userRepository.findOne({
+      where: { id: managerId },
+      relations: ['managedEmployees'],
+    });
+
+    if (!manager) {
+      throw new NotFoundException('Manager not found');
+    }
+
+    return manager.managedEmployees;
+  }
 }

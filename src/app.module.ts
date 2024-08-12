@@ -10,6 +10,13 @@ import { ProfileModule } from "./profile/profile.module";
 import { join } from "path";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { DocumentModule } from './document/document.module';
+import { EvaluationModule } from "./evaluation/evaluation.module";
+import { ProjectModule } from "./project/project.module";
+import { AnnualGoalModule } from "./annual-goal/annual-goal.module";
+import {EvaluationController} from "./evaluation/evaluation.controller";
+import {ProjectController} from "./project/project.controller";
+import {ProjectService} from "./project/project.service";
+import {EvaluationService} from "./evaluation/evaluation.service"; // Import AnnualgoalModule
 
 @Module({
   imports: [
@@ -23,8 +30,11 @@ import { DocumentModule } from './document/document.module';
       serveRoot: "/uploads",
     }),
     DocumentModule,
+    EvaluationModule,
+    AnnualGoalModule,
+    ProjectModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, EvaluationController,  ProjectController],
+  providers: [AppService, EvaluationService, ProjectService],
 })
 export class AppModule {}
