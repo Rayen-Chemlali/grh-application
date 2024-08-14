@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Param, Get, Patch } from "@nestjs/common";
+import { Controller, Post, Body, Param, Get, Patch, Delete } from "@nestjs/common";
 import { CongeService } from "./conge.service";
 import { CongeEntity } from "./entity/conge.entity";
 
@@ -47,5 +47,10 @@ export class CongeController {
   @Patch(":id/pending")
   async pendingConge(@Param("id") id: number): Promise<CongeEntity> {
     return this.congeService.pendingConge(id);
+  }
+
+  @Delete(":id")
+  async deleteConge(@Param("id") id: number): Promise<void> {
+    return this.congeService.deleteConge(id);
   }
 }

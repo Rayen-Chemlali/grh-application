@@ -79,4 +79,11 @@ export class CongeService {
     conge.status = "Pending";
     return this.congeRepository.save(conge);
   }
+  async deleteConge(id: number): Promise<void> {
+    const conge = await this.congeRepository.findOne({ where: { id } });
+    if (!conge) {
+      throw new Error("Leave request not found");
+    }
+    await this.congeRepository.delete(id);
+  }
 }
