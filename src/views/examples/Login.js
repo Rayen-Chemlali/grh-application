@@ -91,6 +91,7 @@ const Login = () => {
           const response1 = await axios.get(`http://localhost:3000/users/${id}`);
           const user = JSON.stringify(response1.data);
           localStorage.setItem("user", user);
+          window.dispatchEvent(new Event('storage'));
           axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
           navigate("/home-page");
         } catch (error) {

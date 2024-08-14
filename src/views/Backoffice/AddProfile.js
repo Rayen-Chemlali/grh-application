@@ -31,7 +31,8 @@ const AddProfile = () => {
   const [civilite, setCivilite] = useState("");
   const [sexe, setSexe] = useState("");
   const [nationalite, setNationalite] = useState("");
-  const [dateEtLieuDeNaissance, setDateEtLieuDeNaissance] = useState("");
+  const [dateNaissance, setDateNaissance] = useState("");
+  const [lieuNaissance, setLieuNaissance] = useState("");
   const [adresseDomicile, setAdresseDomicile] = useState("");
   const [image, setImage] = useState(null);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState("");
@@ -40,6 +41,26 @@ const AddProfile = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
   const [employees, setEmployees] = useState([]);
+  const [currentFieldIndex, setCurrentFieldIndex] = useState(0);
+
+  const fieldOrder = [
+    "nom",
+    "prenom",
+    "pole",
+    "domaine",
+    "metier",
+    "filiere",
+    "lieuDeTravail",
+    "responsable",
+    "email",
+    "civilite",
+    "sexe",
+    "nationalite",
+    "dateNaissance",
+    "lieuNaissance",
+    "adresseDomicile",
+    "image",
+  ];
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -53,72 +74,141 @@ const AddProfile = () => {
     fetchEmployees();
   }, []);
 
-  const handleInputChange = async (e) => {
+  const handleInputChange = (e) => {
     const { name, value, files } = e.target;
 
     if (name === "employeeId") {
       setSelectedEmployeeId(value);
       if (value) {
-        try {
-          const user = await axios.get(`http://localhost:3000/users/${value}`);
-          console.log(user.data.profile.id)
-          const response = await axios.get(`http://localhost:3000/profile/${user.data.profile.id}`);
-          const profile = response.data;
-          user.profile = profile;
-          localStorage.setItem("user",  JSON.stringify(user.data))
-
-          setNom(profile.nom || "");
-          setPrenom(profile.prenom || "");
-          setPole(profile.pole || "");
-          setDomaine(profile.domaine || "");
-          setMetier(profile.metier || "");
-          setFiliere(profile.filiere || "");
-          setLieuDeTravail(profile.lieuDeTravail || "");
-          setResponsable(profile.responsable || "");
-          setEmail(profile.email || "");
-          setCivilite(profile.civilite || "");
-          setSexe(profile.sexe || "");
-          setNationalite(profile.nationalite || "");
-          setDateEtLieuDeNaissance(profile.dateEtLieuDeNaissance || "");
-          setAdresseDomicile(profile.adresseDomicile || "");
-          setImage(profile.image || null);
-        } catch (error) {
-          console.error("Error fetching profile", error);
-        }
+        fetchProfile(value);
       } else {
-        setNom("");
-        setPrenom("");
-        setPole("");
-        setDomaine("");
-        setMetier("");
-        setFiliere("");
-        setLieuDeTravail("");
-        setResponsable("");
-        setEmail("");
-        setCivilite("");
-        setSexe("");
-        setNationalite("");
-        setDateEtLieuDeNaissance("");
-        setAdresseDomicile("");
-        setImage(null);
+        resetFields();
+        setCurrentFieldIndex(0);
+      }
+    } else {
+      if (name === "nom") setNom(value);
+      if (name === "prenom") setPrenom(value);
+      if (name === "pole") setPole(value);
+      if (name === "domaine") setDomaine(value);
+      if (name === "metier") setMetier(value);
+      if (name === "filiere") setFiliere(value);
+      if (name === "lieuDeTravail") setLieuDeTravail(value);
+      if (name === "responsable") setResponsable(value);
+      if (name === "email") setEmail(value);
+      if (name === "civilite") setCivilite(value);
+      if (name === "sexe") setSexe(value);
+      if (name === "nationalite") setNationalite(value);
+      if (name === "dateNaissance") setDateNaissance(value);
+      if (name === "lieuNaissance") setLieuNaissance(value);
+      if (name === "adresseDomicile") setAdresseDomicile(value);
+      if (name === "image") setImage(files ? files[0] : null);
+    }
+  };
+
+  const fetchProfile = async (id) => {
+    try {
+      const user = await axios.get(`http://localhost:3000/users/${id}`);
+      const response = await axios.get(`http://localhost:3000/profile/${user.data.profile.id}`);
+      const profile = response.data;
+      user.profile = profile;
+      localStorage.setItem("user", JSON.stringify(user.data));
+
+      setNom(profile.nom || "");
+      setPrenom(profile.prenom || "");
+      setPole(profile.pole || "");
+      setDomaine(profile.domaine || "");
+      setMetier(profile.metier || "");
+      setFiliere(profile.filiere || "");
+      setLieuDeTravail(profile.lieuDeTravail || "");
+      setResponsable(profile.responsable || "");
+      setEmail(profile.email || "");
+      setCivilite(profile.civilite || "");
+      setSexe(profile.sexe || "");
+      setNationalite(profile.nationalite || "");
+      setDateNaissance(profile.dateNaissance || "");
+      setLieuNaissance(profile.lieuNaissance || "");
+      setAdresseDomicile(profile.adresseDomicile || "");
+      setImage(profile.image || null);
+
+      setCurrentFieldIndex(fieldOrder.length);
+    } catch (error) {
+      resetFields();
+      setCurrentFieldIndex(0);
+      console.error("Error fetching profile", error);
+    }
+  };
+
+  const resetFields = () => {
+    setNom("");
+    setPrenom("");
+    setPole("");
+    setDomaine("");
+    setMetier("");
+    setFiliere("");
+    setLieuDeTravail("");
+    setResponsable("");
+    setEmail("");
+    setCivilite("");
+    setSexe("");
+    setNationalite("");
+    setDateNaissance("");
+    setLieuNaissance("");
+    setAdresseDomicile("");
+    setImage(null);
+  };
+
+  const handleAddProfile = async (e) => {
+    e.preventDefault();
+    if (!isSubmit) {
+      setIsSubmit(true);
+      if (currentFieldIndex < fieldOrder.length) {
+        setCurrentFieldIndex(currentFieldIndex + 1);
+        setIsSubmit(false);
+      } else {
+        if (validateForm()) {
+          const formData = new FormData();
+          formData.append("nom", nom);
+          formData.append("prenom", prenom);
+          formData.append("pole", pole);
+          formData.append("domaine", domaine);
+          formData.append("metier", metier);
+          formData.append("filiere", filiere);
+          formData.append("lieuDeTravail", lieuDeTravail);
+          formData.append("responsable", responsable);
+          formData.append("email", email);
+          formData.append("civilite", civilite);
+          formData.append("sexe", sexe);
+          formData.append("nationalite", nationalite);
+          formData.append("dateNaissance", dateNaissance);
+          formData.append("lieuNaissance", lieuNaissance);
+          formData.append("adresseDomicile", adresseDomicile);
+          if (image) {
+            formData.append("image", image);
+          }
+          try {
+            const response = await axios.post(
+              `http://localhost:3000/profile/${selectedEmployeeId}`,
+              formData,
+              {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+              }
+            );
+            setMessage("Profile created successfully!");
+            resetFields();
+            setCurrentFieldIndex(0);
+            setErrorMessage("");
+          } catch (error) {
+            setErrorMessage("There was an error creating the profile!");
+            console.error("Error creating profile", error);
+          }
+        } else {
+          setErrorMessage("Please correct the errors in the form.");
+        }
+        setIsSubmit(false);
       }
     }
-
-    if (name === "nom") setNom(value);
-    if (name === "prenom") setPrenom(value);
-    if (name === "pole") setPole(value);
-    if (name === "domaine") setDomaine(value);
-    if (name === "metier") setMetier(value);
-    if (name === "filiere") setFiliere(value);
-    if (name === "lieuDeTravail") setLieuDeTravail(value);
-    if (name === "responsable") setResponsable(value);
-    if (name === "email") setEmail(value);
-    if (name === "civilite") setCivilite(value);
-    if (name === "sexe") setSexe(value);
-    if (name === "nationalite") setNationalite(value);
-    if (name === "dateEtLieuDeNaissance") setDateEtLieuDeNaissance(value);
-    if (name === "adresseDomicile") setAdresseDomicile(value);
-    if (name === "image") setImage(files[0]);
   };
 
   const validateForm = () => {
@@ -126,72 +216,343 @@ const AddProfile = () => {
     return true;
   };
 
-  const handleAddProfile = async (e) => {
-    e.preventDefault();
-    if (!isSubmit) {
-      setIsSubmit(true);
-      if (validateForm()) {
-        if (!selectedEmployeeId) {
-          setErrorMessage("Please select a manager.");
-          setIsSubmit(false);
-          return;
-        }
+  const nationalities = ["American", "French", "German", "Tunisian", "Other"];
+  const sexes = ["Man", "Woman"];
 
-        const formData = new FormData();
-        formData.append("nom", nom);
-        formData.append("prenom", prenom);
-        formData.append("pole", pole);
-        formData.append("domaine", domaine);
-        formData.append("metier", metier);
-        formData.append("filiere", filiere);
-        formData.append("lieuDeTravail", lieuDeTravail);
-        formData.append("responsable", responsable);
-        formData.append("email", email);
-        formData.append("civilite", civilite);
-        formData.append("sexe", sexe);
-        formData.append("nationalite", nationalite);
-        formData.append("dateEtLieuDeNaissance", dateEtLieuDeNaissance);
-        formData.append("adresseDomicile", adresseDomicile);
-        if (image) {
-          formData.append("image", image);
-        }
-        try {
-          console.log("id", selectedEmployeeId);
-          const response = await axios.post(
-            `http://localhost:3000/profile/${selectedEmployeeId}`,
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
-          setMessage("Profile created successfully!");
-          setNom("");
-          setPrenom("");
-          setPole("");
-          setDomaine("");
-          setMetier("");
-          setFiliere("");
-          setLieuDeTravail("");
-          setResponsable("");
-          setEmail("");
-          setCivilite("");
-          setSexe("");
-          setNationalite("");
-          setDateEtLieuDeNaissance("");
-          setAdresseDomicile("");
-          setImage(null);
-          setSelectedEmployeeId("");
-          setErrorMessage("");
-        } catch (error) {
-          setErrorMessage("There was an error creating the profile!");
-          console.error("Error creating profile", error);
-        }
-      } else {
-        setErrorMessage("Please correct the errors in the form.");
-      }
-      setIsSubmit(false);
+  const renderField = (field) => {
+    switch (field) {
+      case "nom":
+        return (
+          <FormGroup key="nom">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-single-copy-04" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                placeholder="Nom"
+                type="text"
+                name="nom"
+                value={nom}
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              />
+            </InputGroup>
+          </FormGroup>
+        );
+      case "prenom":
+        return (
+          <FormGroup key="prenom">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-single-copy-04" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                placeholder="Prenom"
+                type="text"
+                name="prenom"
+                value={prenom}
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              />
+            </InputGroup>
+          </FormGroup>
+        );
+      case "pole":
+        return (
+          <FormGroup key="pole">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-building" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                placeholder="Pole"
+                type="text"
+                name="pole"
+                value={pole}
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              />
+            </InputGroup>
+          </FormGroup>
+        );
+      case "domaine":
+        return (
+          <FormGroup key="domaine">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-briefcase-24" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                placeholder="Domaine"
+                type="text"
+                name="domaine"
+                value={domaine}
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              />
+            </InputGroup>
+          </FormGroup>
+        );
+      case "metier":
+        return (
+          <FormGroup key="metier">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-briefcase-24" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                placeholder="Metier"
+                type="text"
+                name="metier"
+                value={metier}
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              />
+            </InputGroup>
+          </FormGroup>
+        );
+      case "filiere":
+        return (
+          <FormGroup key="filiere">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-hat-3" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                placeholder="Filiere"
+                type="text"
+                name="filiere"
+                value={filiere}
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              />
+            </InputGroup>
+          </FormGroup>
+        );
+      case "lieuDeTravail":
+        return (
+          <FormGroup key="lieuDeTravail">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-pin-3" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                placeholder="Lieu de Travail"
+                type="text"
+                name="lieuDeTravail"
+                value={lieuDeTravail}
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              />
+            </InputGroup>
+          </FormGroup>
+        );
+      case "responsable":
+        return (
+          <FormGroup key="responsable">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-single-02" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                placeholder="Responsable"
+                type="text"
+                name="responsable"
+                value={responsable}
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              />
+            </InputGroup>
+          </FormGroup>
+        );
+      case "email":
+        return (
+          <FormGroup key="email">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-email-83" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                placeholder="Email"
+                type="email"
+                name="email"
+                value={email}
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              />
+            </InputGroup>
+          </FormGroup>
+        );
+      case "civilite":
+        return (
+          <FormGroup key="civilite">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-circle-08" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                placeholder="Civilite"
+                type="text"
+                name="civilite"
+                value={civilite}
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              />
+            </InputGroup>
+          </FormGroup>
+        );
+      case "sexe":
+        return (
+          <FormGroup key="sexe">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-favourite-28" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="select"
+                name="sexe"
+                value={sexe}
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              >
+                <option value="">Select Sex</option>
+                {sexes.map((sex, index) => (
+                  <option key={index} value={sex}>
+                    {sex}
+                  </option>
+                ))}
+              </Input>
+            </InputGroup>
+          </FormGroup>
+        );
+      case "nationalite":
+        return (
+          <FormGroup key="nationalite">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-world-2" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="select"
+                name="nationalite"
+                value={nationalite}
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              >
+                <option value="">Select Nationality</option>
+                {nationalities.map((nationality, index) => (
+                  <option key={index} value={nationality}>
+                    {nationality}
+                  </option>
+                ))}
+              </Input>
+            </InputGroup>
+          </FormGroup>
+        );
+      case "dateNaissance":
+        return (
+          <FormGroup key="dateNaissance">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-calendar-grid-58" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                placeholder="Date de Naissance"
+                type="date"
+                name="dateNaissance"
+                value={dateNaissance}
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              />
+            </InputGroup>
+          </FormGroup>
+        );
+      case "lieuNaissance":
+        return (
+          <FormGroup key="lieuNaissance">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-square-pin" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                placeholder="Lieu de Naissance"
+                type="text"
+                name="lieuNaissance"
+                value={lieuNaissance}
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              />
+            </InputGroup>
+          </FormGroup>
+        );
+      case "adresseDomicile":
+        return (
+          <FormGroup key="adresseDomicile">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-square-pin" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                placeholder="Adresse Domicile"
+                type="text"
+                name="adresseDomicile"
+                value={adresseDomicile}
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              />
+            </InputGroup>
+          </FormGroup>
+        );
+      case "image":
+        return (
+          <FormGroup key="image">
+            <InputGroup className="input-group-alternative mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="ni ni-image" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="file"
+                name="image"
+                onChange={handleInputChange}
+                style={{ fontSize: "18px" }}
+              />
+            </InputGroup>
+          </FormGroup>
+        );
+      default:
+        return null;
     }
   };
 
@@ -246,244 +607,7 @@ const AddProfile = () => {
                           </Input>
                         </InputGroup>
                       </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-single-copy-04" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Nom"
-                            type="text"
-                            name="nom"
-                            value={nom}
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-single-copy-04" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Prenom"
-                            type="text"
-                            name="prenom"
-                            value={prenom}
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-building" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Pole"
-                            type="text"
-                            name="pole"
-                            value={pole}
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-briefcase-24" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Domaine"
-                            type="text"
-                            name="domaine"
-                            value={domaine}
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-briefcase-24" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Metier"
-                            type="text"
-                            name="metier"
-                            value={metier}
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-hat-3" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Filiere"
-                            type="text"
-                            name="filiere"
-                            value={filiere}
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-pin-3" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Lieu de Travail"
-                            type="text"
-                            name="lieuDeTravail"
-                            value={lieuDeTravail}
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-single-02" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Responsable"
-                            type="text"
-                            name="responsable"
-                            value={responsable}
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-email-83" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Email"
-                            type="email"
-                            name="email"
-                            value={email}
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-circle-08" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Civilite"
-                            type="text"
-                            name="civilite"
-                            value={civilite}
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-favourite-28" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Sexe"
-                            type="text"
-                            name="sexe"
-                            value={sexe}
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-world-2" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Nationalite"
-                            type="text"
-                            name="nationalite"
-                            value={nationalite}
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-calendar-grid-58" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Date et Lieu de Naissance"
-                            type="text"
-                            name="dateEtLieuDeNaissance"
-                            value={dateEtLieuDeNaissance}
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-square-pin" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Adresse Domicile"
-                            type="text"
-                            name="adresseDomicile"
-                            value={adresseDomicile}
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-image" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            type="file"
-                            name="image"
-                            onChange={handleInputChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
+                      {fieldOrder.slice(0, currentFieldIndex + 1).map((field) => renderField(field))}
                       {message && (
                         <div className="text-center mb-3 alert alert-success">
                           <small>{message}</small>
@@ -501,7 +625,7 @@ const AddProfile = () => {
                           type="submit"
                           disabled={isSubmit}
                         >
-                          Add Profile
+                          {currentFieldIndex < fieldOrder.length ? "Add Profile" : "Submit"}
                         </Button>
                       </div>
                     </Form>
