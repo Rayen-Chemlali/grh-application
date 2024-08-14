@@ -72,10 +72,6 @@ const PopupDemo = () => {
               <span>manage conge</span>
             </DropdownItem>
           )}
-            <DropdownItem to="/conge" tag={Link}>
-              <i className="ni ni-calendar-grid-58" />
-              <span>submit conge</span>
-            </DropdownItem>
             <DropdownItem to="/viewconge" tag={Link}>
               <i className="ni ni-calendar-grid-58" />
               <span>view conge</span>

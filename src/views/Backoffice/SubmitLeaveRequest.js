@@ -15,17 +15,15 @@ import {
   Col,
 } from 'reactstrap';
 import axios from 'axios';
-import SimpleFooter from 'components/Footers/SimpleFooter';
-import DemoNavbar from 'components/Navbars/DemoNavbar';
 
-const SubmitLeaveRequest = () => {
+const SubmitLeaveRequest = ({ closeModal }) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [reason, setReason] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user =  JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user"));
     try {
       const response = await axios.post('http://localhost:3000/conge', {
         employeeId: user.id, 
@@ -34,6 +32,7 @@ const SubmitLeaveRequest = () => {
         reason,
       });
       alert('Leave request submitted successfully');
+      closeModal(); // Close the modal on successful submission
     } catch (error) {
       console.error('Error submitting leave request:', error);
       alert('Failed to submit leave request');
@@ -41,21 +40,7 @@ const SubmitLeaveRequest = () => {
   };
 
   return (
-    <>
-    <DemoNavbar />
-    <main>
-      <section className="section section-shaped section-lg">
-        <div className="shape shape-style-1 bg-gradient-default">
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
-    <Container className="mt-5">
+    <Container>
       <Row>
         <Col md="8" className="ml-auto mr-auto">
           <Card>
@@ -112,10 +97,6 @@ const SubmitLeaveRequest = () => {
         </Col>
       </Row>
     </Container>
-    </section>
-      </main>
-      <SimpleFooter />
-    </>
   );
 };
 
