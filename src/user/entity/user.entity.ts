@@ -5,11 +5,14 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
-  OneToOne,
+  OneToOne, ManyToMany,
 } from "typeorm";
 import { RoleEntity } from "../../role/entity/role.entity";
 import { ProfileEntity } from "../../profile/entity/profile.entity";
 import {DocumentEntity} from "../../document/entity/document.entity";
+import {AnnualGoalEntity} from "../../annual-goal/entity/annual-goal.entity";
+import {ProjectEntity} from "../../project/entity/project.entity";
+import {EvaluationEntity} from "../../evaluation/entity/evaluation.entity";
 
 @Entity()
 export class UserEntity {
@@ -41,4 +44,16 @@ export class UserEntity {
 
   @OneToMany(() => DocumentEntity, (document) => document.user)
   documents: DocumentEntity[];
+  @OneToMany(() => AnnualGoalEntity, goal => goal.user)
+  annualGoals: AnnualGoalEntity[];
+
+  @ManyToMany(() => ProjectEntity, project => project.users)
+  projects: ProjectEntity[];
+
+
+  @ManyToMany(() => ProjectEntity, project => project.users)
+  managedProjects: ProjectEntity[];
+
+  @OneToMany(() => EvaluationEntity, evaluation => evaluation.user)
+  evaluations: EvaluationEntity[];
 }
