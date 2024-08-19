@@ -1,14 +1,15 @@
-import { IsNotEmpty, IsString, IsEnum } from 'class-validator';
+import { IsNotEmpty, IsString, IsEnum, IsNumber } from "class-validator";
 
 export class CreateAnnualGoalDto {
-    @IsNotEmpty()
-    @IsString()
-    description: string;
+  @IsNotEmpty()
+  @IsString()
+  description: string;
 
-    @IsNotEmpty()
-    @IsEnum(['Not Started', 'In Progress', 'Completed'])
-    status: string;
+  @IsNotEmpty()
+  @IsEnum(["Not Started", "In Progress", "Completed"])
+  status: string;
 
-    @IsNotEmpty()
-    userId: number;
+  @IsNotEmpty()
+  @IsNumber()
+  user_id: number;
 }

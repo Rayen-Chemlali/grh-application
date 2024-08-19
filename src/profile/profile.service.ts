@@ -3,7 +3,7 @@ import { ProfileEntity } from "./entity/profile.entity";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ProfileDTO } from "./dto/create-profile.dto";
-import {UserEntity} from "../user/entity/user.entity";
+import { UserEntity } from "../user/entity/user.entity";
 
 @Injectable()
 export class ProfileService {
