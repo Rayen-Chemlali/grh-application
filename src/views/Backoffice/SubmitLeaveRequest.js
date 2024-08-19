@@ -32,7 +32,7 @@ const SubmitLeaveRequest = ({ closeModal }) => {
         reason,
       });
       alert('Leave request submitted successfully');
-      closeModal(); // Close the modal on successful submission
+      closeModal(); 
     } catch (error) {
       console.error('Error submitting leave request:', error);
       alert('Failed to submit leave request');
