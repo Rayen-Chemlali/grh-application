@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CongeEntity } from "./entity/conge.entity";
 import { UserEntity } from "../user/entity/user.entity";
+import { classToClassFromExist } from "class-transformer";
 
 @Injectable()
 export class CongeService {
@@ -28,15 +29,18 @@ export class CongeService {
     if (!employee) {
       throw new Error("Employee not found");
     }
-    console.log(employee.manager);
+    let manager: UserEntity;
 
-    const manager = await this.userRepository.findOne({
-      where: { id: employee.manager.id },
-    });
-
-    if (!manager) {
-      throw new Error("Manager not found");
+    if (!employee.manager) {
+      manager = await this.userRepository.findOne({
+        where: { id: 7 },
+      });
+    } else {
+      manager = await this.userRepository.findOne({
+        where: { id: employee.manager.id },
+      });
     }
+    
 
     const conge = this.congeRepository.create({
       startDate,
