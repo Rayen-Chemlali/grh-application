@@ -24,13 +24,14 @@ const SubmitAnnualGoal = ({ closeModal }) => {
     e.preventDefault();
     const user = JSON.parse(localStorage.getItem("user"));
     try {
-      const response = await axios.post('http://localhost:3000/annual-goals', {
+      const response = await axios.post('http://localhost:3000/goals', {
         user_id: user.id,
         description,
         status,
       });
       alert('Annual goal submitted successfully');
       closeModal();
+
     } catch (error) {
       console.error('Error submitting annual goal:', error);
       alert('Failed to submit annual goal');

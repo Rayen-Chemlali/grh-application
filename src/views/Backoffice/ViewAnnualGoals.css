@@ -1,0 +1,30 @@
+.toggle-box {
+  display: inline-flex;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  width: 80px;
+  justify-content: space-between;
+}
+
+.icon-button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-button.active {
+  background-color: #333;
+  color: white;
+}
+
+.icon-button.inactive {
+  background-color: white;
+  color: #ccc; /* Gray out inactive button */
+}

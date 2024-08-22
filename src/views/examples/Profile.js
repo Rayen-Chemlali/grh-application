@@ -28,12 +28,40 @@ const Profile = () => {
         console.error("There was an error fetching the profile!", error);
       }
     };}
-
-    fetchProfile();
+    if (profile){
+    fetchProfile();}
   }, []);
 
   if (!profile) {
-    return <div>Loading...</div>;
+    return (<><DemoNavbar />
+          <main className="profile-page" ref={mainRef}>
+        <section className="section-profile-cover section-shaped my-0">
+          <div className="shape shape-style-1 shape-default alpha-4">
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
+          <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100vh",
+                textAlign: "center",
+              }}
+            >
+              <h1 style={{ fontSize: "3rem", fontWeight: "bold", color: "#fff" }}>
+                Still No Profile
+              </h1>
+            </div>
+    </section>
+    </main>
+    <SimpleFooter />
+    </>);
   }
 
   return (
@@ -174,6 +202,7 @@ const Profile = () => {
       </main>
       <SimpleFooter />
     </>
+
   );
 };
 
