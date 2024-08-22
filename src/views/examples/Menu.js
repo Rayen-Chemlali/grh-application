@@ -76,6 +76,16 @@ const PopupDemo = () => {
               <i className="ni ni-calendar-grid-58" />
               <span>view conge</span>
             </DropdownItem>
+        
+          <DropdownItem to="/goals" tag={Link}>
+              <i className="ni ni-calendar-grid-58" />
+              <span>annual-goal</span>
+            </DropdownItem>
+                    
+          <DropdownItem to="/project" tag={Link}>
+              <i className="ni ni-calendar-grid-58" />
+              <span>project</span>
+            </DropdownItem>
           <DropdownItem divider />
           <DropdownItem href="#pablo" onClick={handleLogout}>
             <i className="ni ni-user-run" />
