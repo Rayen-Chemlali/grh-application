@@ -56,8 +56,8 @@ export class UserController {
   async deleteUser(@Param("id") id: number): Promise<void> {
     return this.userService.deleteUser(id);
   }
-  @Get(':managerId/managed-employees')
-  getManagedEmployees(@Param('managerId') managerId: number) {
+  @Get(":managerId/managed-employees")
+  getManagedEmployees(@Param("managerId") managerId: number) {
     return this.userService.getManagedEmployees(managerId);
   }
 }

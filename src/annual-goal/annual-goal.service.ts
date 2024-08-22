@@ -68,11 +68,15 @@ export class AnnualGoalService {
     id: number,
     updateGoalDto: UpdateAnnualGoalDto,
   ): Promise<AnnualGoalEntity> {
+    const goals = await this.annualGoalRepository.find({ where: { id: id } });
+    console.log(goals);
+    const { description } = updateGoalDto;
+    console.log("{status, description}", updateGoalDto);
     const goal = await this.annualGoalRepository.preload({
       id,
-      ...updateGoalDto,
+      description,
     });
-
+    console.log("goal ", goal);
     if (!goal) {
       throw new NotFoundException("Goal not found");
     }

@@ -12,7 +12,7 @@ import { AnnualGoalService } from "./annual-goal.service";
 import { CreateAnnualGoalDto } from "./dto/create-annual-goal.dto";
 import { UpdateAnnualGoalDto } from "./dto/update-annual-goal.dto";
 
-@Controller("annual-goals")
+@Controller("goals")
 export class AnnualGoalController {
   constructor(private readonly annualGoalService: AnnualGoalService) {}
 
@@ -49,10 +49,10 @@ export class AnnualGoalController {
 
   @Put(":id")
   updateGoal(
-    @Param("id") id: number,
+    @Param("id") id: string,
     @Body() updateGoalDto: UpdateAnnualGoalDto,
   ) {
-    return this.annualGoalService.updateGoal(id, updateGoalDto);
+    return this.annualGoalService.updateGoal(parseInt(id, 10), updateGoalDto);
   }
 
   @Put(":id/approve")
