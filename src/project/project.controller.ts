@@ -7,9 +7,11 @@ import {
   Delete,
   Put,
   Query,
+  ParseIntPipe,
 } from "@nestjs/common";
 import { ProjectService } from "./project.service";
 import { CreateProjectDto } from "./dto/create-project.dto";
+import { UserEntity } from "src/user/entity/user.entity";
 
 @Controller("projects")
 export class ProjectController {
@@ -23,6 +25,11 @@ export class ProjectController {
   @Get()
   getProjects() {
     return this.projectService.getProjects();
+  }
+
+  @Delete(":id")
+  deleteProject(@Param("id") id: number) {
+    return this.projectService.deleteProject(id);
   }
 
   @Get("status")
@@ -64,5 +71,12 @@ export class ProjectController {
   @Get("user/:userId")
   getUserProjects(@Param("userId") userId: number) {
     return this.projectService.getUserProjects(userId);
+  }
+
+  @Get(":id/users")
+  async getProjectUsers(
+    @Param("id", ParseIntPipe) id: number,
+  ): Promise<UserEntity[]> {
+    return this.projectService.getProjectUsers(id);
   }
 }
