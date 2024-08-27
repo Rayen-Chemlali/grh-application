@@ -5,6 +5,7 @@ import {
   ManyToMany,
   JoinTable,
   ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import { UserEntity } from "../../user/entity/user.entity";
 
@@ -32,7 +33,7 @@ export class ProjectEntity {
   })
   status: string;
 
-  @ManyToMany(() => UserEntity, (user) => user.projects)
+  @ManyToMany(() => UserEntity, (user) => user.projects, { nullable: true })
   @JoinTable()
   users: UserEntity[];
 
