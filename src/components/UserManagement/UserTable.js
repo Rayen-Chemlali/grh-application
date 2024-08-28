@@ -20,6 +20,7 @@ const UserTable = () => {
                     fetchManagers(),
                     fetchRoles(),
                 ]);
+                
                 setUsers(usersData);
                 setManagers(managersData);
                 setRoles(rolesData);

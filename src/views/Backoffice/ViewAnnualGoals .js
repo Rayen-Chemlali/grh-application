@@ -224,7 +224,7 @@ const ViewAnnualGoals = () => {
 
       <Modal isOpen={modal} toggle={toggleModal} size="lg">
         <ModalBody className="p-4">
-          <SubmitAnnualGoal closeModal={handleCloseModal} />
+        <SubmitAnnualGoal closeModal={handleCloseModal} selectedEmployee={selectedEmployee} />
         </ModalBody>
       </Modal>
 

@@ -16,22 +16,24 @@ import {
 } from 'reactstrap';
 import axios from 'axios';
 
-const SubmitAnnualGoal = ({ closeModal }) => {
+const SubmitAnnualGoal = ({ closeModal, selectedEmployee }) => {
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('Not Started');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    const userId = selectedEmployee && selectedEmployee !== 'manager' ? selectedEmployee : user.id;
+
     try {
       const response = await axios.post('http://localhost:3000/goals', {
-        user_id: user.id,
+        user_id: userId, 
         description,
         status,
       });
       alert('Annual goal submitted successfully');
       closeModal();
-
     } catch (error) {
       console.error('Error submitting annual goal:', error);
       alert('Failed to submit annual goal');
