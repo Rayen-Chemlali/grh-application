@@ -5,7 +5,7 @@ import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
 
 const Profile = () => {
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState([]);
   const mainRef = useRef(null);
 
   useEffect(() => {
@@ -14,25 +14,30 @@ const Profile = () => {
     if (mainRef.current) {
       mainRef.current.scrollTop = 0;
     }
-
+    console.log("oussema amri")
     const fetchProfile = async () => {
       const user =  JSON.parse(localStorage.getItem("user"));
+      console.log( "profile id",user.profile.id);
+      console.log("oussema amri")
+    
       if(user){
       const userId = user.profile.id; 
+      console.log(userId);
 
       try {
         const response = await axios.get(`http://localhost:3000/profile/${userId}`);
         setProfile(response.data);
-        console.log(response.data.image)
+        console.log(response.data.image);
+        console.log(response.data);
       } catch (error) {
         console.error("There was an error fetching the profile!", error);
       }
     };}
-    if (profile){
-    fetchProfile();}
+
+    fetchProfile();
   }, []);
 
-  if (!profile) {
+  if (profile === null) {
     return (<><DemoNavbar />
           <main className="profile-page" ref={mainRef}>
         <section className="section-profile-cover section-shaped my-0">
