@@ -21,7 +21,7 @@ export class DocumentEntity {
     @Column()
     path: string;
 
-    @ManyToOne(() => UserEntity, (user) => user.documents)
+    @ManyToOne(() => UserEntity, (user) => user.documents,{onDelete:'CASCADE'})
     @JoinColumn({ name: "user_id" })
     user: UserEntity;
 }

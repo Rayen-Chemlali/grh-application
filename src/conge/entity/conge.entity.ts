@@ -28,11 +28,11 @@ export class CongeEntity {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity,{onDelete:'CASCADE'})
   @JoinColumn({ name: "employee_id" })
   employee: UserEntity;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity,{onDelete:'CASCADE'})
   @JoinColumn({ name: "manager_id" })
   manager: UserEntity;
 }

@@ -18,11 +18,11 @@ export class EvaluationEntity {
   @Column({ type: 'enum', enum: ['A', 'B', 'C', 'D', 'E', 'F'], nullable: true })
   managerRating?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
 
-  @ManyToOne(() => UserEntity, user => user.evaluations)
+  @ManyToOne(() => UserEntity, user => user.evaluations,{onDelete:'CASCADE'})
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  @ManyToOne(() => UserEntity, user => user.managerEvaluations)
+  @ManyToOne(() => UserEntity, user => user.managerEvaluations,{onDelete:'CASCADE'})
   @JoinColumn({ name: 'manager_id' })
   manager: UserEntity;
 
