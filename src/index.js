@@ -22,6 +22,10 @@ import ApproveRejectLeaveRequest from "views/Backoffice/ApproveRejectLeaveReques
 import ViewLeaveRequests from "views/Backoffice/ViewLeaveRequests";
 import ViewAnnualGoals from "views/Backoffice/ViewAnnualGoals ";
 import ViewProjects from "views/Backoffice/ViewProjects";
+import ManagerEvaluationPage from "./views/Backoffice/ManagerEvaluationPage";
+import EmployeeEvaluationPage from "./views/Backoffice/EmployeeEvaluationPage";
+import EvaluationForm from "./components/EvaluationManagement/EvaluationForm";
+import EvaluationPage from "./views/Backoffice/EvaluationPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -39,6 +43,9 @@ root.render(
           <Route path="/viewconge" element={<ViewLeaveRequests />} />
           <Route path="/goals" element={<ViewAnnualGoals />} />
           <Route path="/project" element={<ViewProjects />} />
+          <Route path="/manager-evaluation-page" element={<ManagerEvaluationPage />} />
+          <Route path="/add-evaluation-page" element={<EvaluationPage />} />
+          <Route path="/employee-evaluation-page" element={<EmployeeEvaluationPage />} />
         </Route> 
         <Route path="/" element={<Landing />} />
         <Route path="/leav" element={<LeaveManagement />} />

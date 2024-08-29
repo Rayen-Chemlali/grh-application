@@ -95,7 +95,7 @@ const UserTable = () => {
                         <th scope="col">Username</th>
                         <th scope="col">Email</th>
                         <th scope="col">Password</th>
-                        <th scope="col">Role</th>
+                        <th scope="col" style={{ width: '120px' }}>Role</th>
                         <th scope="col">Manager</th>
                         <th scope="col">Manage Documents</th>
                         <th scope="col">Confirm Changes</th>
@@ -142,7 +142,7 @@ const UserTable = () => {
                                             {user.role.name}
                                         </option>
                                     ) : (
-                                        <option value="">Select Role</option>
+                                        <option value="">Select role</option>
                                     )}
                                     {roles
                                         .filter(role => role.id !== user.role?.id)
@@ -153,6 +153,7 @@ const UserTable = () => {
                                         ))}
                                 </Input>
                             </td>
+
                             <td>
                                 <Input
                                     type="select"

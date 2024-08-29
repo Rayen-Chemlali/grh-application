@@ -87,6 +87,27 @@ const PopupDemo = () => {
               <span>project</span>
             </DropdownItem>
           <DropdownItem divider />
+
+          {user?.role?.name === "admin" && (
+              <DropdownItem to="/add-evaluation-page" tag={Link}>
+                <i className="ni ni-ruler-pencil" />
+                <span>Add Evaluation</span>
+              </DropdownItem>
+          )}
+
+          {user?.role?.name === "manager" && (
+              <DropdownItem to="/manager-evaluation-page" tag={Link}>
+                <i className="ni ni-ruler-pencil" />
+                <span>Manage Evaluations</span>
+              </DropdownItem>
+          )}
+
+          <DropdownItem to="/employee-evaluation-page" tag={Link}>
+            <i className="ni ni-check-bold" />
+            <span>View Evaluations</span>
+          </DropdownItem>
+
+
           <DropdownItem href="#pablo" onClick={handleLogout}>
             <i className="ni ni-user-run" />
             <span>Logout</span>
