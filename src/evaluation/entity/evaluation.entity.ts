@@ -1,13 +1,7 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-} from "typeorm";
-import { UserEntity } from "../../user/entity/user.entity";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { UserEntity } from '../../user/entity/user.entity';
 
-@Entity("evaluations")
+@Entity('evaluations')
 export class EvaluationEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -15,13 +9,26 @@ export class EvaluationEntity {
   @Column()
   comments: string;
 
-  @Column({ type: "date" })
+  @Column({ type: 'date' })
   evaluationDate: Date;
 
-  @Column({ type: "enum", enum: ["A", "B", "C", "D", "E", "F"] })
-  rating: "A" | "B" | "C" | "D" | "E" | "F";
+  @Column({ type: 'enum', enum: ['A', 'B', 'C', 'D', 'E', 'F'], nullable: true })
+  employeeRating?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
 
-  @ManyToOne(() => UserEntity, (user) => user.evaluations)
-  @JoinColumn({ name: "user_id" })
+  @Column({ type: 'enum', enum: ['A', 'B', 'C', 'D', 'E', 'F'], nullable: true })
+  managerRating?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
+
+  @ManyToOne(() => UserEntity, user => user.evaluations)
+  @JoinColumn({ name: 'user_id' })
   user: UserEntity;
+
+  @ManyToOne(() => UserEntity, user => user.managerEvaluations)
+  @JoinColumn({ name: 'manager_id' })
+  manager: UserEntity;
+
+  @Column({ type: 'text', nullable: true })
+  managerFeedback?: string;
+
+  @Column({ type: 'text', nullable: true })
+  employeeFeedback?: string;
 }

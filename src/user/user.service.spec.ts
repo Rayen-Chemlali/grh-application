@@ -7,11 +7,13 @@ import { UserEntity } from "./entity/user.entity";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { RoleEntity } from "../role/entity/role.entity";
+import { ProfileEntity } from '../profile/entity/profile.entity'; // Import your ProfileEntity
 
 describe('UserService', () => {
   let service: UserService;
   let userRepository: Repository<UserEntity>;
   let roleRepository: Repository<RoleEntity>;
+  let profileRepository: Repository<ProfileEntity>; // Add this line
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -25,12 +27,17 @@ describe('UserService', () => {
           provide: getRepositoryToken(RoleEntity),
           useClass: Repository,
         },
+        {
+          provide: getRepositoryToken(ProfileEntity), // Add this provider
+          useClass: Repository,
+        },
       ],
     }).compile();
 
     service = module.get<UserService>(UserService);
     userRepository = module.get<Repository<UserEntity>>(getRepositoryToken(UserEntity));
     roleRepository = module.get<Repository<RoleEntity>>(getRepositoryToken(RoleEntity));
+    profileRepository = module.get<Repository<ProfileEntity>>(getRepositoryToken(ProfileEntity)); // Add this line
   });
 
   it('should be defined', () => {
@@ -45,7 +52,6 @@ describe('UserService', () => {
       expect(await service.getUsers()).toBe(result);
     });
   });
-
 
   describe('updateUserRole', () => {
     it('should update the role of a user and return the updated user', async () => {
@@ -85,7 +91,6 @@ describe('UserService', () => {
     });
   });
 
-
   describe('deleteUser', () => {
     it('should delete a user', async () => {
       const user = new UserEntity();
@@ -114,4 +119,3 @@ describe('UserService', () => {
     });
   });
 });
-

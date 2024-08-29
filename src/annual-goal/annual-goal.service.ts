@@ -8,7 +8,7 @@ import { Repository } from "typeorm";
 import { AnnualGoalEntity } from "./entity/annual-goal.entity";
 import { CreateAnnualGoalDto } from "./dto/create-annual-goal.dto";
 import { UpdateAnnualGoalDto } from "./dto/update-annual-goal.dto";
-import { UserEntity } from "src/user/entity/user.entity";
+import { UserEntity } from "../user/entity/user.entity";
 
 @Injectable()
 export class AnnualGoalService {

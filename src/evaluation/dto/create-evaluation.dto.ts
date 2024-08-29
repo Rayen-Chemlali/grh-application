@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsEnum, IsDateString, IsInt, IsPositive } from 'class-validator';
+import { IsNotEmpty, IsString, IsEnum, IsDateString, IsInt, IsPositive, IsOptional } from 'class-validator';
 
 export class CreateEvaluationDto {
     @IsNotEmpty()
@@ -7,11 +7,15 @@ export class CreateEvaluationDto {
 
     @IsNotEmpty()
     @IsDateString()
-    evaluationDate: string; // Using string to validate date format
+    evaluationDate: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsEnum(['A', 'B', 'C', 'D', 'E', 'F'])
-    rating: 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
+    employeeRating?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
+
+    @IsOptional()
+    @IsEnum(['A', 'B', 'C', 'D', 'E', 'F'])
+    managerRating?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
 
     @IsNotEmpty()
     @IsInt()
@@ -21,5 +25,5 @@ export class CreateEvaluationDto {
     @IsNotEmpty()
     @IsInt()
     @IsPositive()
-    projectId: number;
+    managerId: number; // Add managerId field to link the evaluation to the manager
 }

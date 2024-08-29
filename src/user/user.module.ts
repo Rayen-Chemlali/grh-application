@@ -4,8 +4,8 @@ import { UserService } from "./user.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserEntity } from "./entity/user.entity";
 import { RoleEntity } from "../role/entity/role.entity";
-import { ProfileModule } from "src/profile/profile.module";
-import { ProfileEntity } from "src/profile/entity/profile.entity";
+import { ProfileModule } from "../profile/profile.module";
+import { ProfileEntity } from "../profile/entity/profile.entity";
 
 @Module({
   imports: [
