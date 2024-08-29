@@ -26,5 +26,45 @@
 
 .icon-button.inactive {
   background-color: white;
-  color: #ccc; /* Gray out inactive button */
+  color: #ccc;
+}
+
+
+.status-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.icon-active {
+  color: green;
+  font-size: 1.5em;
+  transition: color 0.3s ease;
+}
+
+.icon-inactive {
+  color: red;
+  font-size: 1.5em; 
+  transition: color 0.3s ease;
+}
+
+.status-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.icon-active {
+  color: green;
+  font-size: 1.5em; 
+  transition: color 0.3s ease;
+}
+
+
+.icon-inactive {
+  color: red;
+  font-size: 1.5em; 
+  transition: color 0.3s ease;
 }
