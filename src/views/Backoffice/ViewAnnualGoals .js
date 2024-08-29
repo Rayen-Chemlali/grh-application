@@ -30,6 +30,7 @@ const ViewAnnualGoals = () => {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [manager, setManager] = useState(false);
   const [user, setUser] = useState(null);
+  const [myGoals, setMyGoals] = useState("My Goals");
 
   useEffect(() => {
     const fetchAnnualGoals = async () => {
@@ -81,6 +82,7 @@ const ViewAnnualGoals = () => {
         [field]: updatedValue,
       };
       await axios.put(`http://localhost:3000/goals/${goal.id}`, updatedGoal);
+      console.log("updated")
       setAnnualGoals(annualGoals.map(g => (g.id === goal.id ? updatedGoal : g)));
     } catch (error) {
       console.error(`Failed to update the ${field} field:`, error);
@@ -112,6 +114,10 @@ const ViewAnnualGoals = () => {
 
   const handleEmployeeChange = (event) => {
     const employeeId = event.target.value;
+    const selectedOptionName = event.target.options[event.target.selectedIndex].text; // Get the name of the selected option
+    setMyGoals(selectedOptionName);
+    console.log(selectedOptionName);
+  
     setSelectedEmployee(employeeId);
     fetchEmployeeGoals(employeeId);
   };
@@ -168,6 +174,7 @@ const ViewAnnualGoals = () => {
                             <td>{goal.description}</td>
                             <td>{goal.status}</td>
                             <td>
+                            {!manager || myGoals === 'My Goals' ? (
                               <div className="toggle-box">
                                 <button
                                   className={`icon-button ${goal.employeeApproved ? 'active' : 'inactive'}`}
@@ -182,8 +189,18 @@ const ViewAnnualGoals = () => {
                                   <FaTimes />
                                 </button>
                               </div>
+                            ) : (
+                              <div className="status-icon">
+                                {goal.employeeApproved ? (
+                                  <FaCheck className="icon-active" />
+                                ) : (
+                                  <FaTimes className="icon-inactive" />
+                                )}
+                              </div>
+                            )}
                             </td>
-                            <td>
+                             <td>
+                            {manager && myGoals !== 'My Goals' ? (
                               <div className="toggle-box">
                                 <button
                                   className={`icon-button ${goal.managerApproved ? 'active' : 'inactive'}`}
@@ -198,7 +215,17 @@ const ViewAnnualGoals = () => {
                                   <FaTimes />
                                 </button>
                               </div>
-                            </td>
+                            ) : (
+                              <div className="status-icon">
+                                {goal.managerApproved ? (
+                                  <FaCheck className="icon-active" />
+                                ) : (
+                                  <FaTimes className="icon-inactive" />
+                                )}
+                              </div>
+                            )}
+                          </td>
+
                             <td>
                               <Button color="warning" className="btn-icon btn-round mr-2" onClick={() => openUpdateModal(goal)}>
                                 <FaEdit />
