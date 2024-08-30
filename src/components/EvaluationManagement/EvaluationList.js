@@ -28,7 +28,7 @@ const EvaluationList = ({ evaluations, role, onEvaluationUpdated }) => {
     const handleSubmit = async () => {
         try {
             const updateData = {
-                ...(role === "employee"
+                ...(role !== "manager"
                     ? { employeeRating: rating, employeeFeedback: selectedFeedback }
                     : { managerRating: rating, managerFeedback: selectedFeedback }),
             };
@@ -75,7 +75,6 @@ const EvaluationList = ({ evaluations, role, onEvaluationUpdated }) => {
             <Table responsive className="align-items-center table-flush">
                 <thead className="thead-light">
                 <tr>
-                    <th scope="col">Employee</th>
                     <th scope="col">Description</th>
                     <th scope="col">Employee Rating</th>
                     <th scope="col">Employee Feedback</th>
@@ -88,7 +87,7 @@ const EvaluationList = ({ evaluations, role, onEvaluationUpdated }) => {
                 <tbody>
                 {evaluations.map((evaluation) => (
                     <tr key={evaluation.id}>
-                        <td>{evaluation.user.username}</td>
+
                         <td>
                                 <span
                                     id={`comment-${evaluation.id}`}

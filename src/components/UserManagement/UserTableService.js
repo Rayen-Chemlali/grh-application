@@ -4,7 +4,7 @@ const API_URL = 'http://localhost:3000';
 
 export const fetchUsers = () => axios.get(`${API_URL}/users`).then(res => res.data);
 
-export const fetchManagers = () => axios.get(`${API_URL}/users/role/1`).then(res => res.data);
+export const fetchManagers = () => axios.get(`${API_URL}/users/role/9`).then(res => res.data);
 
 export const fetchRoles = () => axios.get(`${API_URL}/roles`).then(res => res.data);
 

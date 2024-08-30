@@ -5,10 +5,12 @@ import axios from "axios";
 const EvaluationForm = () => {
     const [formData, setFormData] = useState({
         userId: "",
+        goalId: "",
         comments: "",
         evaluationDate: "",
     });
     const [users, setUsers] = useState([]);
+    const [goals, setGoals] = useState([]);
     const [message, setMessage] = useState({ text: "", color: "" });
 
     useEffect(() => {
@@ -25,6 +27,24 @@ const EvaluationForm = () => {
         fetchUsers();
     }, []);
 
+    useEffect(() => {
+        if (formData.userId) {
+            // Fetch goals for the selected user from the API
+            const fetchGoals = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:3000/goals/${formData.userId}`);
+                    setGoals(response.data);
+                } catch (error) {
+                    console.error("Error fetching goals:", error);
+                }
+            };
+
+            fetchGoals();
+        } else {
+            setGoals([]);
+        }
+    }, [formData.userId]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -39,6 +59,7 @@ const EvaluationForm = () => {
             // Reset form
             setFormData({
                 userId: "",
+                goalId: "",
                 comments: "",
                 evaluationDate: "",
             });
@@ -72,6 +93,25 @@ const EvaluationForm = () => {
                         {users.map((user) => (
                             <option key={user.id} value={user.id}>
                                 {user.username}
+                            </option>
+                        ))}
+                    </Input>
+                </FormGroup>
+                <FormGroup>
+                    <Label for="goalId">Goal</Label>
+                    <Input
+                        type="select"
+                        name="goalId"
+                        id="goalId"
+                        value={formData.goalId}
+                        onChange={handleChange}
+                        required
+                        disabled={!formData.userId}
+                    >
+                        <option value="">Select Goal</option>
+                        {goals.map((goal) => (
+                            <option key={goal.id} value={goal.id}>
+                                {goal.description}
                             </option>
                         ))}
                     </Input>
