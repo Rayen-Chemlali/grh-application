@@ -82,14 +82,20 @@ export class EvaluationService {
 
 
     async update(id: number, updateEvaluationDto: UpdateEvaluationDto): Promise<EvaluationEntity> {
-        const evaluation = await this.evaluationRepository.findOneBy({ id });
+        const evaluation = await this.evaluationRepository.findOne({
+            where: { id },
+        });
 
+        if (!evaluation) {
+            throw new NotFoundException('Evaluation not found');
+        }
 
         return this.evaluationRepository.save({
             ...evaluation,
             ...updateEvaluationDto,
         });
     }
+
 
     async getEvaluationsByGoal(goalId: number): Promise<EvaluationEntity[]> {
         const goal = await this.goalRepository.findOne({

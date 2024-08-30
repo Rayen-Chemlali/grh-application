@@ -47,11 +47,36 @@ describe('AnnualGoalService', () => {
     expect({});
   });
 
-  it('should get goals by user', async () => {
-    const userId = 1;
-    await service.getGoalsByUser(userId);
-    expect(annualGoalRepository.find).toHaveBeenCalledWith({ where: { user: { id: userId } as any } });
+  describe('getGoalsByUser', () => {
+    it('should get goals by user ID', async () => {
+      const userId = 1;
+
+      // Create a mock `AnnualGoalEntity` object with all required properties
+      const mockGoal: AnnualGoalEntity = {
+        id: 1,
+        description: 'Test Goal',
+        status: 'Not Started',
+        user: { id: userId } as UserEntity,
+        employeeApproved: false,
+        managerApproved: false,
+        evaluations: [], // or provide appropriate mock evaluations
+      };
+
+      const expectedResult: AnnualGoalEntity[] = [mockGoal];
+      jest.spyOn(annualGoalRepository, 'find').mockResolvedValue(expectedResult);
+
+      const goals = await service.getGoalsByUser(userId);
+
+      // Ensure the find method is called with the correct parameters
+      expect(annualGoalRepository.find).toHaveBeenCalledWith({
+        where: { user: { id: userId } },
+        relations: ['evaluations'],
+      });
+
+      expect(goals).toEqual(expectedResult);
+    });
   });
+
 
   it('should get all goals', async () => {
     await service.getAllGoals();
