@@ -53,7 +53,6 @@ describe('EvaluationService', () => {
                 employeeRating: 'A',
                 managerRating: 'B',
                 userId: 1,
-                managerId: 2,
             };
             const user = new UserEntity();
             user.id = 1;
@@ -75,7 +74,6 @@ describe('EvaluationService', () => {
                 employeeRating: 'A',
                 managerRating: 'B',
                 userId: 999,
-                managerId: 2,
             };
 
             jest.spyOn(userRepository, 'findOne').mockResolvedValueOnce(null).mockResolvedValueOnce(new UserEntity());
@@ -90,7 +88,6 @@ describe('EvaluationService', () => {
                 employeeRating: 'A',
                 managerRating: 'B',
                 userId: 1,
-                managerId: 2,
             };
 
             await expect(service.createEvaluation(createEvaluationDto)).rejects.toThrow(BadRequestException);

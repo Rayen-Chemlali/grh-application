@@ -49,10 +49,10 @@ export class UserEntity {
   @OneToMany(() => AnnualGoalEntity, (goal) => goal.user, { cascade: true, onDelete: 'CASCADE' })
   annualGoals: AnnualGoalEntity[];
 
-  @ManyToMany(() => ProjectEntity, (project) => project.users)
+  @ManyToMany(() => ProjectEntity, (project) => project.users,{ cascade: true, onDelete: 'SET NULL' })
   projects: ProjectEntity[];
 
-  @ManyToMany(() => ProjectEntity, (project) => project.users)
+  @ManyToMany(() => ProjectEntity, (project) => project.users,{ cascade: true, onDelete: 'SET NULL' })
   managedProjects: ProjectEntity[];
 
   @OneToMany(() => EvaluationEntity, (evaluation) => evaluation.user, { cascade: true, onDelete: 'CASCADE' })

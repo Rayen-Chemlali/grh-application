@@ -1,3 +1,4 @@
+
 import { IsNotEmpty, IsString, IsEnum, IsDateString, IsInt, IsPositive, IsOptional } from 'class-validator';
 
 export class CreateEvaluationDto {
@@ -25,5 +26,5 @@ export class CreateEvaluationDto {
     @IsNotEmpty()
     @IsInt()
     @IsPositive()
-    managerId: number; // Add managerId field to link the evaluation to the manager
+    goalId: number;
 }

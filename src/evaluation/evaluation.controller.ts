@@ -12,6 +12,10 @@ export class EvaluationController {
     createEvaluation(@Body() createEvaluationDto: CreateEvaluationDto) {
         return this.evaluationService.createEvaluation(createEvaluationDto);
     }
+    @Get('by-goal/:goalId')
+    async getEvaluationsByGoal(@Param('goalId') goalId: number): Promise<EvaluationEntity[]> {
+        return this.evaluationService.getEvaluationsByGoal(goalId);
+    }
 
     @Get('user/:userId')
     getEvaluationsByUser(@Param('userId') userId: number) {

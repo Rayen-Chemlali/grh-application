@@ -42,7 +42,6 @@ describe('EvaluationController', () => {
                 employeeRating: 'A',
                 managerRating: 'B',
                 userId: 1,
-                managerId: 2,
             };
             const result = new EvaluationEntity();
             jest.spyOn(service, 'createEvaluation').mockResolvedValue(result);
@@ -57,7 +56,6 @@ describe('EvaluationController', () => {
                 employeeRating: 'A',
                 managerRating: 'B',
                 userId: 1,
-                managerId: 2,
             };
 
             jest.spyOn(service, 'createEvaluation').mockRejectedValue(new BadRequestException());

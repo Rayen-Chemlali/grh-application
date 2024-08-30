@@ -34,11 +34,20 @@ export class ProjectEntity {
   status: string;
 
   @ManyToMany(() => UserEntity, (user) => user.projects, { nullable: true })
-  @JoinTable()
+  @JoinTable({
+    name: "project_users",
+    joinColumn: {
+      name: "project_id",
+      referencedColumnName: "id",
+    },
+    inverseJoinColumn: {
+      name: "user_id",
+      referencedColumnName: "id",
+    },
+  })
   users: UserEntity[];
 
-  @ManyToOne(() => UserEntity, (user) => user.managedProjects, {
-    nullable: true,
-  })
+  @ManyToOne(() => UserEntity, (user) => user.managedProjects, { nullable: true, onDelete: 'SET NULL' })
+  @JoinColumn({ name: "project_manager_id" })
   projectManager: UserEntity;
 }

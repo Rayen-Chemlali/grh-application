@@ -16,4 +16,5 @@ export class UpdateEvaluationDto {
     @IsOptional()
     @IsString()
     managerFeedback?: string;
+
 }

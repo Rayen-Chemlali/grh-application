@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { UserEntity } from '../../user/entity/user.entity';
+import {AnnualGoalEntity} from "../../annual-goal/entity/annual-goal.entity";
 
 @Entity('evaluations')
 export class EvaluationEntity {
@@ -31,4 +32,8 @@ export class EvaluationEntity {
 
   @Column({ type: 'text', nullable: true })
   employeeFeedback?: string;
+
+  @ManyToOne(() => AnnualGoalEntity, goal => goal.evaluations, { onDelete: 'CASCADE' })
+  goal: AnnualGoalEntity;
+
 }

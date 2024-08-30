@@ -36,11 +36,15 @@ export class AnnualGoalService {
   getGoalsByUser(userId: number): Promise<AnnualGoalEntity[]> {
     return this.annualGoalRepository.find({
       where: { user: { id: userId } as any },
+      relations: ['evaluations'], // Include evaluations
     });
   }
 
+
   getAllGoals(): Promise<AnnualGoalEntity[]> {
-    return this.annualGoalRepository.find();
+    return this.annualGoalRepository.find({
+      relations: ['evaluations'], // Include evaluations
+    });
   }
 
   getGoalsByStatus(status: string): Promise<AnnualGoalEntity[]> {

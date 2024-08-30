@@ -5,6 +5,7 @@ import { EvaluationEntity } from './entity/evaluation.entity';
 import { CreateEvaluationDto } from './dto/create-evaluation.dto';
 import { UpdateEvaluationDto } from './dto/update-evaluation.dto';
 import { UserEntity } from '../user/entity/user.entity';
+import { AnnualGoalEntity } from '../annual-goal/entity/annual-goal.entity';
 
 @Injectable()
 export class EvaluationService {
@@ -13,26 +14,27 @@ export class EvaluationService {
         private evaluationRepository: Repository<EvaluationEntity>,
         @InjectRepository(UserEntity)
         private userRepository: Repository<UserEntity>,
+        @InjectRepository(AnnualGoalEntity)
+        private goalRepository: Repository<AnnualGoalEntity>,
     ) {}
 
     async getEvaluationsByManager(managerId: number): Promise<EvaluationEntity[]> {
         return this.evaluationRepository.find({
             where: { manager: { id: managerId } },
-            relations: ['manager', 'user'],
+            relations: ['manager', 'user', 'goal'],
         });
     }
 
     async getEvaluationsByUser(userId: number): Promise<EvaluationEntity[]> {
         return this.evaluationRepository.find({
             where: { user: { id: userId } },
-            relations: ['user'],
+            relations: ['user', 'goal'],
         });
     }
-
     async createEvaluation(createEvaluationDto: CreateEvaluationDto): Promise<EvaluationEntity> {
-        const { userId, managerId, comments, evaluationDate, employeeRating, managerRating } = createEvaluationDto;
+        const { userId, goalId, comments, evaluationDate, employeeRating, managerRating } = createEvaluationDto;
 
-        if (!userId || !comments || !evaluationDate) {
+        if (!userId || !goalId || !comments || !evaluationDate) {
             throw new BadRequestException('Missing required fields');
         }
 
@@ -41,34 +43,69 @@ export class EvaluationService {
             relations: ['manager'],
         });
 
-        const manager = await this.userRepository.findOne({
-            where: { id: managerId },
-        });
-
         if (!user) {
             throw new NotFoundException('User not found');
         }
 
+        const manager = user.manager;
         if (!manager) {
             throw new NotFoundException('Manager not found');
         }
 
-        // Create a new evaluation instance
+        const goal = await this.goalRepository.findOne({
+            where: { id: goalId },
+            relations: ['evaluations'],
+        });
+
+        if (!goal) {
+            throw new NotFoundException('Goal not found');
+        }
+
         const newEvaluation = this.evaluationRepository.create({
             user,
             manager,
+            goal,
             comments,
             evaluationDate,
             employeeRating,
             managerRating,
         });
 
-        // Save and return the new evaluation
-        return this.evaluationRepository.save(newEvaluation);
+        // Save the new evaluation
+        const savedEvaluation = await this.evaluationRepository.save(newEvaluation);
+
+        goal.evaluations.push(savedEvaluation);
+        await this.goalRepository.save(goal);
+
+        return savedEvaluation;
     }
 
+
     async update(id: number, updateEvaluationDto: UpdateEvaluationDto): Promise<EvaluationEntity> {
-        await this.evaluationRepository.update(id, updateEvaluationDto);
-        return this.evaluationRepository.findOneBy({ id });
+        const evaluation = await this.evaluationRepository.findOneBy({ id });
+
+
+        return this.evaluationRepository.save({
+            ...evaluation,
+            ...updateEvaluationDto,
+        });
+    }
+
+    async getEvaluationsByGoal(goalId: number): Promise<EvaluationEntity[]> {
+        const goal = await this.goalRepository.findOne({
+            where: { id: goalId },
+            relations: ['evaluations'],
+        });
+
+        if (!goal) {
+            throw new NotFoundException('Goal not found');
+        }
+
+        // Optionally: check if evaluations are related to the goal
+        if (!goal.evaluations) {
+            throw new NotFoundException('No evaluations found for this goal');
+        }
+
+        return goal.evaluations;
     }
 }
