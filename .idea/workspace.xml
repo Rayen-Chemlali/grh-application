@@ -6,14 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="48e639d2-2c7c-4729-8805-537ff62c03ee" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/.eslintcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/0.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/0.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/1.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack.old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserManagement/UserTableService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserManagement/UserTableService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Backoffice/ViewAnnualGoals .js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Backoffice/ViewAnnualGoals .js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/examples/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/examples/Register.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +42,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\44ray\\WebstormProjects\\grh-frontend\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -63,6 +56,8 @@
       <updated>1724932748526</updated>
       <workItem from="1724932749581" duration="2558000" />
       <workItem from="1725008826114" duration="2802000" />
+      <workItem from="1725017058951" duration="6898000" />
+      <workItem from="1726131984968" duration="128000" />
     </task>
     <servers />
   </component>
