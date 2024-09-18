@@ -4,7 +4,7 @@
 
 L'application de gestion des ressources humaines (GRH) est un outil complet conçu pour simplifier et optimiser la gestion des employés et des processus RH au sein des organisations. Elle offre des fonctionnalités robustes pour la gestion des profils des employés, le suivi des congés et absences, ainsi que l'évaluation des performances.
 
-Développée lors d'un stage d'été chez Talan Tunisie Consulting, cette application a été conçue pour répondre aux besoins des départements RH en offrant des outils efficaces et intuitifs pour la gestion quotidienne des ressources humaines.
+Développée lors d'un stage d'été chez Talan Tunisie Consulting, cette application a été conçue pour répondre aux besoins des départements RH en offrant des outils efficaces et intuitifs pour la gestion quotidienne des ressources humaines. Cette application a été encadrée par Madame Manel Ghzaiel et développée en collaboration avec Oussema Amri.
 
 ### Fonctionnalités Principales
 
