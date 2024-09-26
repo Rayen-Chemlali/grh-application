@@ -18,7 +18,7 @@ Développée lors d'un stage d'été chez Talan Tunisie Consulting, cette applic
    - **Consultation des Profils** : Les profils des employés peuvent être consultés en détail, avec des options de recherche et de filtrage par nom, département ou poste.
    - **Ajout de Documents** : Les administrateurs peuvent ajouter des documents supplémentaires pour chaque employé, comme les CV et les diplômes.
 
-#### 3. **Gestion des Congés et Absences**
+#### 3. **Gestion des Congés **
    - **Soumission de Demandes de Congés** : Les employés peuvent soumettre des demandes de congés via une interface dédiée.
    - **Consultation des Demandes** : Les managers peuvent consulter les demandes de congés soumises par les employés.
    - **Validation des Demandes** : Les managers peuvent approuver ou rejeter les demandes de congés.
@@ -43,14 +43,6 @@ Pour faire fonctionner l'application, il est nécessaire de lancer les deux bran
 ## Utilisation
 
 Après avoir démarré les deux branches, vous pouvez accéder à l'interface utilisateur via un navigateur web à l'adresse `http://localhost:3000` (ou une autre adresse configurée). Connectez-vous en utilisant les informations d'identification appropriées pour accéder aux différentes fonctionnalités de l'application.
-
-## Contribuer
-
-1. Forkez le dépôt.
-2. Créez une branche pour votre fonctionnalité (`git checkout -b feature/AmazingFeature`).
-3. Commitez vos modifications (`git commit -m 'Add some AmazingFeature'`).
-4. Poussez votre branche (`git push origin feature/AmazingFeature`).
-5. Ouvrez une Pull Request.
 
 ## Licence
 
