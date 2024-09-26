@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="48e639d2-2c7c-4729-8805-537ff62c03ee" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +36,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;GRH-Frontend&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/44ray/WebstormProjects/grh-frontend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -58,6 +59,10 @@
       <workItem from="1725008826114" duration="2802000" />
       <workItem from="1725017058951" duration="6898000" />
       <workItem from="1726131984968" duration="128000" />
+      <workItem from="1726699563298" duration="512000" />
+      <workItem from="1726700113211" duration="10000" />
+      <workItem from="1726823571287" duration="10000" />
+      <workItem from="1726836206309" duration="767000" />
     </task>
     <servers />
   </component>

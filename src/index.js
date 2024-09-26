@@ -36,7 +36,6 @@ root.render(
         <Route element={<PrivateRoutes />}>
           <Route path="/profile-page" element={<Profile />} />
           <Route path="/register-page" element={<Register />} />
-          <Route path="/users" element={<UserTablePage />} />
           <Route path="/profile" element={<AddProfile />} />
           <Route path="/documents/:userId" element={<DocumentManagementPage />} />
           <Route path="/manage" element={<ApproveRejectLeaveRequest />} />
@@ -46,6 +45,8 @@ root.render(
           <Route path="/manager-evaluation-page" element={<ManagerEvaluationPage />} />
           <Route path="/add-evaluation-page" element={<EvaluationPage />} />
           <Route path="/employee-evaluation-page" element={<EmployeeEvaluationPage />} />
+          <Route path="/users" element={<UserTablePage />} />
+
         </Route> 
         <Route path="/" element={<Landing />} />
         <Route path="/leav" element={<LeaveManagement />} />
